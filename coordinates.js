@@ -3281,41 +3281,39 @@ const VideoToImage = video => {
 }
 
 const InitPartitioning = geometry => {
-  if(geometry.partitionSize != 1e5){
-    console.log('vIndices -> ', geometry.vIndices)
-    var ax=0, ay=0, az=0, ct=0
-    var minX = 1e6
-    var minY = 1e6
-    var minZ = 1e6
-    var maxX = -1e6
-    var maxY = -1e6
-    var maxZ = -1e6
-    var x = 0, y = 0, z = 0
+  console.log(geometry)
+  var ax=0, ay=0, az=0, ct=0
+  var minX = 1e6
+  var minY = 1e6
+  var minZ = 1e6
+  var maxX = -1e6
+  var maxY = -1e6
+  var maxZ = -1e6
+  var x = 0, y = 0, z = 0
 
-    geometry.partitions = Array(2).fill().map(v => {
-      return {
-        oIndices: [],
-        vIndices: [],
-        nIndices: [],
-        uvIndices: [],
-        nVecIndices: [],
-      }
-    })
-    for(var i = 0; i < geometry.vertices.length; i+=9){
-      for(var m = 0; m < 3; m++){
-        ax += geometry.vertices[i+0+m*3]
-        ay += geometry.vertices[i+1+m*3]
-        az += geometry.vertices[i+2+m*3]
-      }
-      ax /= ct
-      ay /= ct
-      az /= ct
-      
-      //if(ax > 0){
-      //  partitions[0].vIndices.push()
-      //}else{
-      //  partitions[1].vIndices.push()
-      //}
+  geometry.partitions = Array(2).fill().map(v => {
+    return {
+      oIndices: [],
+      vIndices: [],
+      nIndices: [],
+      uvIndices: [],
+      nVecIndices: [],
+    }
+  })
+  for(var i = 0; i < geometry.vertices.length; i+=9){
+    for(var m = 0; m < 3; m++){
+      ax += geometry.vertices[i+0+m*3]
+      ay += geometry.vertices[i+1+m*3]
+      az += geometry.vertices[i+2+m*3]
+    }
+    ax /= ct
+    ay /= ct
+    az /= ct
+    
+    if(ax > 0){
+      //partitions[0].vIndices.push()
+    }else{
+      //partitions[1].vIndices.push()
     }
   }  
 }  
