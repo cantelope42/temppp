@@ -515,7 +515,7 @@ const Renderer = async options => {
                 }
                 
                 if(geometry.isPartitioned){
-                  tgvi = geometry.partitions[0].vIndices
+                  tvertices = geometry.partitions[0].vertices
                 }
                 
                 var toffsets = []
@@ -991,11 +991,13 @@ const Renderer = async options => {
               
               if(geometry?.vertices?.length){
                 
-                var tgvi
+                var tgvi, tvertices
                 if(geometry.isPartitioned){
-                  tgvi = geometry.partitions[0].vIndices
+                  //tgvi = geometry.partitions[0].vIndices
+                  tvertices = geometry.partitions[0].vertices
                 }else{
-                  tgvi = geometry.vIndices
+                  //tgvi = geometry.vIndices
+                  tvertices = geometry.vertices
                 }
                 
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
@@ -1003,7 +1005,7 @@ const Renderer = async options => {
                 //ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
                 //ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
-                ctx.bufferData(ctx.ARRAY_BUFFER, geometry.vertices, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ARRAY_BUFFER, tvertices, ctx.STATIC_DRAW)
                 dset.locPosition = ctx.getAttribLocation(dset.program, "position")
                 ctx.vertexAttribPointer(dset.locPosition, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locPosition)
@@ -3292,6 +3294,7 @@ const VideoToImage = video => {
 }
 
 const InitPartitioning = geometry => {
+  var g = geometry
   var ax=0, ay=0, az=0, ct=0
   var minX = 1e6
   var minY = 1e6
@@ -3301,20 +3304,19 @@ const InitPartitioning = geometry => {
   var maxZ = -1e6
   var x = 0, y = 0, z = 0
 
-  geometry.partitions = Array(2).fill().map(v => {
+  g.partitions = Array(2).fill().map(v => {
     return {
-      oIndices: [],
-      vIndices: [],
-      nIndices: [],
-      uvIndices: [],
-      nVecIndices: [],
+      vertices: [],
+      uvs: [],
+      normals: [],
+      normalVecs: [],
     }
   })
-  for(var i = 0; i < geometry.vertices.length; i+=9){
+  for(var i = 0; i < g.vertices.length; i+=9){
     for(var m = 0; m < 3; m++){
-      ax += geometry.vertices[i+0+m*3]
-      ay += geometry.vertices[i+1+m*3]
-      az += geometry.vertices[i+2+m*3]
+      ax += [i+0+m*3]
+      ay += g.vertices[i+1+m*3]
+      az += g.vertices[i+2+m*3]
       ct++
     }
     ax /= ct
@@ -3322,21 +3324,21 @@ const InitPartitioning = geometry => {
     az /= ct
     
     for(var m = 0; m < 3; m++){
-      var idx = i/3+m
-      if(ax > 0){
-        geometry.partitions[0].vIndices.push(idx)
-        geometry.partitions[0].oIndices.push(idx)
-        geometry.partitions[0].uvIndices.push(idx)
-        geometry.partitions[0].nVecIndices.push(idx)
-        geometry.partitions[0].nIndices.push(idx*2+m)
-        geometry.partitions[0].nIndices.push(idx*2+m+3)
-      }else{
-        geometry.partitions[1].vIndices.push(idx)
-        geometry.partitions[1].oIndices.push(idx)
-        geometry.partitions[1].uvIndices.push(idx)
-        geometry.partitions[1].nVecIndices.push(idx)
-        geometry.partitions[1].nIndices.push(idx*2+m)
-        geometry.partitions[1].nIndices.push(idx*2+m+3)
+      for(var k = 0; k < 3; k++){
+        var idx = i+m*3+k
+        if(ax > 0){
+          g.partitions[0].vertices.push(g.vertices[idx])
+          g.partitions[0].uvs.push(g.uvs[idx])
+          g.partitions[0].normalVecs.push(g.normalVecs[idx])
+          g.partitions[0].normals.push(g.normals[i*2+m*6+k*2])
+          g.partitions[0].normals.push(g.normals[i*2+m*6+k*2+3])
+        }else{
+          g.partitions[1].vertices.push(g.vertices[idx])
+          g.partitions[1].uvs.push(g.uvs[idx])
+          g.partitions[1].normalVecs.push(g.normalVecs[idx])
+          g.partitions[1].normals.push(g.normals[i*2+m*6+k])
+          g.partitions[1].normals.push(g.normals[i*2+m*6+k+3])
+        }
       }
     }
   }  
