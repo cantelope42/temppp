@@ -991,14 +991,13 @@ const Renderer = async options => {
               
               if(geometry?.vertices?.length){
                 
-                var tgvi, tvertices
+                var tvertices
                 if(geometry.isPartitioned){
-                  tgvi = geometry.partitions[1].vIndices
                   tvertices = geometry.partitions[1].vertices
                 }else{
-                  tgvi = geometry.vIndices
                   tvertices = geometry.vertices
                 }
+                var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
                 
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 
