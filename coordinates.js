@@ -515,7 +515,7 @@ const Renderer = async options => {
                 }
                 
                 if(geometry.isPartitioned){
-                  tgvi = geometry.partitions[0]
+                  tgvi = geometry.partitions[0].vIndices
                 }
                 
                 var toffsets = []
@@ -993,7 +993,7 @@ const Renderer = async options => {
                 
                 var tgvi
                 if(geometry.isPartitioned){
-                  tgvi = geometry.partitions[0]
+                  tgvi = geometry.partitions[0].vIndices
                 }else{
                   tgvi = geometry.vIndices
                 }
@@ -2060,7 +2060,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
   var nvstate               = []
   var fsnvstate             = []
   var stride                = ''
-  var partitions            = []
+  var partitions            = []	
 
   var fileURL, hint
   var resolvedFromCache = false
