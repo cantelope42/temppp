@@ -3323,18 +3323,21 @@ const InitPartitioning = geometry => {
     az /= ct
     
     for(var m = 0; m < 3; m++){
+      var idx = i/3+m
       if(ax > 0){
-        geometry.partitions[0].vIndices.push(i/3+m)
-        geometry.partitions[0].oIndices.push(i/3+m)
-        geometry.partitions[0].uvIndices.push(i/3+m)
-        geometry.partitions[0].nVecIndices.push(i/3+m)
-        geometry.partitions[0].nIndices.push(i/3*2+m+3)
+        geometry.partitions[0].vIndices.push(idx)
+        geometry.partitions[0].oIndices.push(idx)
+        geometry.partitions[0].uvIndices.push(idx)
+        geometry.partitions[0].nVecIndices.push(idx)
+        geometry.partitions[0].nIndices.push(idx*2+m)
+        geometry.partitions[0].nIndices.push(idx*2+m+3)
       }else{
-        geometry.partitions[1].vIndices.push(i/3+m)
-        geometry.partitions[1].oIndices.push(i/3+m)
-        geometry.partitions[1].uvIndices.push(i/3+m)
-        geometry.partitions[1].nVecIndices.push(i/3+m)
-        geometry.partitions[1].nIndices.push(i/3*2+m+3)
+        geometry.partitions[1].vIndices.push(idx)
+        geometry.partitions[1].oIndices.push(idx)
+        geometry.partitions[1].uvIndices.push(idx)
+        geometry.partitions[1].nVecIndices.push(idx)
+        geometry.partitions[1].nIndices.push(idx*2+m)
+        geometry.partitions[1].nIndices.push(idx*2+m+3)
       }
     }
   }  
