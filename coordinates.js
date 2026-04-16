@@ -993,7 +993,7 @@ const Renderer = async options => {
                 
                 var tgvi, tvertices
                 if(geometry.isPartitioned){
-                  tgvi = geometry.partitions[0].vIndices
+                  tgvi = geometry.partitions[1].vIndices
                   tvertices = geometry.partitions[1].vertices
                 }else{
                   tgvi = geometry.vIndices
@@ -1019,10 +1019,10 @@ const Renderer = async options => {
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
                 
-                //ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
-                //                    ctx.TRIANGLES,
-                //                  geometry.vertices.length/3|0,
-                //                  ctx.UNSIGNED_INT,0)
+                ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
+                                    ctx.TRIANGLES,
+                                  geometry.vertices.length/3|0,
+                                  ctx.UNSIGNED_INT,0)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
 
@@ -3009,14 +3009,14 @@ const LoadGeometry = async (renderer, geoOptions) => {
   
   //vertics, indices
   vertex_buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer)
+  //gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, null)
   vIndices = new Uint32Array( Array(vertices.length/3).fill().map((v,i)=>i) )
   Vertex_Index_Buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, Vertex_Index_Buffer)
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, vIndices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, Vertex_Index_Buffer)
+  //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, vIndices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
 
 
   if(offsetX || offsetY || offsetZ){
@@ -3030,59 +3030,59 @@ const LoadGeometry = async (renderer, geoOptions) => {
   }
   //offsets, indices
   offset_buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, offset_buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, offsets, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, offset_buffer)
+  //gl.bufferData(gl.ARRAY_BUFFER, offsets, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, null)
   oIndices = new Uint32Array( Array(offsets.length/3).fill().map((v,i)=>i) )
   Offset_Index_Buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, Offset_Index_Buffer)
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, oIndices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, Offset_Index_Buffer)
+  //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, oIndices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
 
   
   //normals, indices
   normalVec_buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, normalVec_buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, normalVecs, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, normalVec_buffer)
+  //gl.bufferData(gl.ARRAY_BUFFER, normalVecs, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, null)
   nVecIndices = new Uint32Array( Array(normalVecs.length/3).fill().map((v,i)=>i) )
   NormalVec_Index_Buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, NormalVec_Index_Buffer)
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, nVecIndices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, NormalVec_Index_Buffer)
+  //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, nVecIndices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
   
   //normals, indices (for flat shading)
   flatShadingNormalVec_buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, flatShadingNormalVec_buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, flatShadingNormalVecs, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, flatShadingNormalVec_buffer)
+  //gl.bufferData(gl.ARRAY_BUFFER, flatShadingNormalVecs, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, null)
   fsnVecIndices = new Uint32Array( Array(flatShadingNormalVecs.length/3).fill().map((v,i)=>i) )
   FlatShadingNormalVec_Index_Buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, FlatShadingNormalVec_Index_Buffer)
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, fsnVecIndices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, FlatShadingNormalVec_Index_Buffer)
+  //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, fsnVecIndices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
   
   //normal lines for drawing, indices
   normal_buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, normal_buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, normal_buffer)
+  //gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, null)
   nIndices = new Uint32Array( Array(normals.length/3).fill().map((v,i)=>i) )
   Normal_Index_Buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, Normal_Index_Buffer)
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, nIndices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, Normal_Index_Buffer)
+  //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, nIndices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
 
   //uvs, indices
   uv_buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, uv_buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, uv_buffer)
+  //gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ARRAY_BUFFER, null)
   uvIndices = new Uint32Array( Array(uvs.length/2).fill().map((v,i)=>i) )
   UV_Index_Buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, UV_Index_Buffer)
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, uvIndices, gl.STATIC_DRAW)
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, UV_Index_Buffer)
+  //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, uvIndices, gl.STATIC_DRAW)
+  //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
 
   if(equirectangular == -1) equirectangular = false
   if(equirectangularHeightmap == -1) equirectangularHeightmap = false
