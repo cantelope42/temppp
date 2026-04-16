@@ -2983,45 +2983,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
     document.body.appendChild(popup)
   }
 
-  if(partitionSize != 1e5){
-    console.log('vIndices -> ', vIndices)
-    var ax=0, ay=0, az=0, ct=0
-    var minX = 1e6
-    var minY = 1e6
-    var minZ = 1e6
-    var maxX = -1e6
-    var maxY = -1e6
-    var maxZ = -1e6
-    var x = 0, y = 0, z = 0
-
-
-    partitions = Array(2).fill().map(v => {
-      return {
-        oIndices: [],
-        vIndices: [],
-        nIndices: [],
-        uvIndices: [],
-        nVecIndices: [],
-      }
-    })
-    for(var i = 0; i < vertices.length; i+=9){
-      for(var m = 0; m < 3; m++){
-        ax += vertices[i+0+m*3]
-        ay += vertices[i+1+m*3]
-        az += vertices[i+2+m*3]
-      }
-      ax /= ct
-      ay /= ct
-      az /= ct
-      
-      //if(ax > 0){
-      //  partitions[0].vIndices.push()
-      //}else{
-      //  partitions[1].vIndices.push()
-      //}
-    }
-  }
-
 
   if(!resolvedFromCache){
     vertices              = new Float32Array(vertices)
@@ -3112,6 +3073,47 @@ const LoadGeometry = async (renderer, geoOptions) => {
 
   if(equirectangular == -1) equirectangular = false
   if(equirectangularHeightmap == -1) equirectangularHeightmap = false
+
+
+  if(partitionSize != 1e5){
+    console.log('vIndices -> ', vIndices)
+    var ax=0, ay=0, az=0, ct=0
+    var minX = 1e6
+    var minY = 1e6
+    var minZ = 1e6
+    var maxX = -1e6
+    var maxY = -1e6
+    var maxZ = -1e6
+    var x = 0, y = 0, z = 0
+
+
+    partitions = Array(2).fill().map(v => {
+      return {
+        oIndices: [],
+        vIndices: [],
+        nIndices: [],
+        uvIndices: [],
+        nVecIndices: [],
+      }
+    })
+    for(var i = 0; i < vertices.length; i+=9){
+      for(var m = 0; m < 3; m++){
+        ax += vertices[i+0+m*3]
+        ay += vertices[i+1+m*3]
+        az += vertices[i+2+m*3]
+      }
+      ax /= ct
+      ay /= ct
+      az /= ct
+      
+      //if(ax > 0){
+      //  partitions[0].vIndices.push()
+      //}else{
+      //  partitions[1].vIndices.push()
+      //}
+    }
+  }
+
 
   var updateGeometry = {
     x, y, z, rows, cols,
