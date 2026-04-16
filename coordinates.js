@@ -994,10 +994,10 @@ const Renderer = async options => {
                 var tgvi, tvertices
                 if(geometry.isPartitioned){
                   //tgvi = geometry.partitions[0].vIndices
-                  tvertices = geometry.partitions[1].vertices
+                  //tvertices = geometry.partitions[1].vertices
                 }else{
                   //tgvi = geometry.vIndices
-                  tvertices = geometry.vertices
+                  //tvertices = geometry.vertices
                 }
                 
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
