@@ -993,7 +993,7 @@ const Renderer = async options => {
                 
                 var tvertices
                 if(geometry.isPartitioned){
-                  tvertices = geometry.partitions[1].vertices
+                  tvertices = new Float32Array(geometry.partitions[1].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
