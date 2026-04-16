@@ -3314,7 +3314,7 @@ const InitPartitioning = geometry => {
   })
   for(var i = 0; i < g.vertices.length; i+=9){
     for(var m = 0; m < 3; m++){
-      ax += [i+0+m*3]
+      ax += g.vertices[i+0+m*3]
       ay += g.vertices[i+1+m*3]
       az += g.vertices[i+2+m*3]
       ct++
