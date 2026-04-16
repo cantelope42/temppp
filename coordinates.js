@@ -994,6 +994,7 @@ const Renderer = async options => {
                 var tgvi
                 if(geometry.isPartitioned){
                   tgvi = geometry.partitions[0].vIndices
+                  console.log(geometry)
                 }else{
                   tgvi = geometry.vIndices
                 }
@@ -2060,7 +2061,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
   var nvstate               = []
   var fsnvstate             = []
   var stride                = ''
-  var partitions            = []	
+  var partitions            = []
 
   var fileURL, hint
   var resolvedFromCache = false
