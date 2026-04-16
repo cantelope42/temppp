@@ -3116,49 +3116,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
     geometry[key] = updateGeometry[key]
   })
   
-  if(geometry.isShapeArray) ProcessShapeArray(geometry)
-    
-  
-  
-  
-  if(partitionSize != 1e5){
-    console.log('vIndices -> ', vIndices)
-    var ax=0, ay=0, az=0, ct=0
-    var minX = 1e6
-    var minY = 1e6
-    var minZ = 1e6
-    var maxX = -1e6
-    var maxY = -1e6
-    var maxZ = -1e6
-    var x = 0, y = 0, z = 0
-
-    partitions = Array(2).fill().map(v => {
-      return {
-        oIndices: [],
-        vIndices: [],
-        nIndices: [],
-        uvIndices: [],
-        nVecIndices: [],
-      }
-    })
-    for(var i = 0; i < vertices.length; i+=9){
-      for(var m = 0; m < 3; m++){
-        ax += vertices[i+0+m*3]
-        ay += vertices[i+1+m*3]
-        az += vertices[i+2+m*3]
-      }
-      ax /= ct
-      ay /= ct
-      az /= ct
-      
-      //if(ax > 0){
-      //  partitions[0].vIndices.push()
-      //}else{
-      //  partitions[1].vIndices.push()
-      //}
-    }
-  }  
-  
+  if(partitionSize != 1e5) InitPartitioning(geometry)
   
   if(geometry.shapeType == 'particles' || isParticle ||
      geometry.shapeType == 'lines' || isLine) {
@@ -3322,8 +3280,46 @@ const VideoToImage = video => {
   return scratchCanvas
 }
 
- 
- 
+const InitPartitioning = geometry => {
+  if(geometry.partitionSize != 1e5){
+    console.log('vIndices -> ', geometry.vIndices)
+    var ax=0, ay=0, az=0, ct=0
+    var minX = 1e6
+    var minY = 1e6
+    var minZ = 1e6
+    var maxX = -1e6
+    var maxY = -1e6
+    var maxZ = -1e6
+    var x = 0, y = 0, z = 0
+
+    geometry.partitions = Array(2).fill().map(v => {
+      return {
+        oIndices: [],
+        vIndices: [],
+        nIndices: [],
+        uvIndices: [],
+        nVecIndices: [],
+      }
+    })
+    for(var i = 0; i < geometry.vertices.length; i+=9){
+      for(var m = 0; m < 3; m++){
+        ax += geometry.vertices[i+0+m*3]
+        ay += geometry.vertices[i+1+m*3]
+        az += geometry.vertices[i+2+m*3]
+      }
+      ax /= ct
+      ay /= ct
+      az /= ct
+      
+      //if(ax > 0){
+      //  partitions[0].vIndices.push()
+      //}else{
+      //  partitions[1].vIndices.push()
+      //}
+    }
+  }  
+}  
+
 const BindImage = (gl, resource, binding, textureMode='image', tval=-1, geometry={}, involveCache = true) => {
   let texImage
   switch(textureMode){
@@ -6298,7 +6294,7 @@ const ShapeFromArray = async (shape, pointArray, options={}) => {
     'heightmapIsDataArray', 'heightmapDataArrayFormat',
     'heightmapDataArrayWidth', 'heightmapDataArrayHeight',
     'rebindTextures', 'exportAsOBJ', 'downloadAsOBJ',
-    'resolved','map', 'video', 'muted'
+    'resolved','map', 'video', 'muted', 'partitionSize'
   ]).forEach(key => { opts[key] = shape[key] })
   opts.name = shape.name
   Object.keys(options).forEach((key, idx) => {
@@ -6339,6 +6335,7 @@ const ShapeFromArray = async (shape, pointArray, options={}) => {
     ret = geometry
     ret.shapeData = shapeData
   })
+  
   return ret
 }
 
