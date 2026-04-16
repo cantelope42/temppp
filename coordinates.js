@@ -994,15 +994,14 @@ const Renderer = async options => {
                 var tgvi
                 if(geometry.isPartitioned){
                   tgvi = geometry.partitions[0].vIndices
-                  console.log(geometry)
                 }else{
                   tgvi = geometry.vIndices
                 }
                 
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 
-                ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
-                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
+                //ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
+                //ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, geometry.vertices, ctx.STATIC_DRAW)
                 dset.locPosition = ctx.getAttribLocation(dset.program, "position")
