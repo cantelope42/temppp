@@ -3303,14 +3303,42 @@ const InitPartitioning = geometry => {
   var maxZ = -1e6
   var x = 0, y = 0, z = 0
 
-  g.partitions = Array(2).fill().map(v => {
+  for(var i = 0; i < g.vertices.length; i+=9){
+    for(var m = 0; m < 3; m++){
+      x = g.vertices[i+0+m*3]
+      y = g.vertices[i+1+m*3]
+      z = g.vertices[i+2+m*3]
+      if(minX < x) minX = x
+      if(minY < y) minY = y
+      if(minZ < z) minZ = z
+      if(minX > x) maxX = x
+      if(minY > y) maxY = y
+      if(minZ > z) maxZ = z
+    }
+  }
+  var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
+  var ctY = ((maxY-minY) / g.partitionSize | 0) + 1
+  var ctZ = ((maxZ-minZ) / g.partitionSize | 0) + 1
+  
+  g.partitions = Array(ctX*ctY*ctZ).fill().map((v, i) => {
+    x = minX + (maxX-minX)/2 + ((i%ctX) - ctX/2 + .5) * (maxX-minX) / ctX
+    y = minY + (maxY-minY)/2 + (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) / ctY
+    z = minZ + (maxZ-minZ)/2 + ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) / ctZ
     return {
+      cx: x,
+      cy: y,
+      cz: z,
       vertices: [],
       uvs: [],
       normals: [],
       normalVecs: [],
+      vIndices: [],
+      uIndices: [],
+      nIndices: [],
+      nvIndices: [],
     }
   })
+  
   for(var i = 0; i < g.vertices.length; i+=9){
     for(var m = 0; m < 3; m++){
       ax += g.vertices[i+0+m*3]
@@ -3325,22 +3353,17 @@ const InitPartitioning = geometry => {
     for(var m = 0; m < 3; m++){
       for(var k = 0; k < 3; k++){
         var idx = i+m*3+k
-        if(ax > 0){
-          g.partitions[0].vertices.push(g.vertices[idx])
-          g.partitions[0].uvs.push(g.uvs[idx])
-          g.partitions[0].normalVecs.push(g.normalVecs[idx])
-          g.partitions[0].normals.push(g.normals[i*2+m*6+k*2])
-          g.partitions[0].normals.push(g.normals[i*2+m*6+k*2+3])
-        }else{
-          g.partitions[1].vertices.push(g.vertices[idx])
-          g.partitions[1].uvs.push(g.uvs[idx])
-          g.partitions[1].normalVecs.push(g.normalVecs[idx])
-          g.partitions[1].normals.push(g.normals[i*2+m*6+k])
-          g.partitions[1].normals.push(g.normals[i*2+m*6+k+3])
-        }
+        var part = (ax/(maxX-minX) | 0) +
+                   (ay/(maxY-minY) | 0) * ctX +
+                   (az/(maxZ-minZ) | 0) * ctX * ctY
+        g.partitions[part].vertices.push(g.vertices[idx])
+        g.partitions[part].uvs.push(g.uvs[idx])
+        g.partitions[part].normalVecs.push(g.normalVecs[idx])
+        g.partitions[part].normals.push(g.normals[i*2+m*6+k*2])
+        g.partitions[part].normals.push(g.normals[i*2+m*6+k*2+3])
       }
     }
-  }  
+  }
   geometry.isPartitioned = true
 }  
 
