@@ -514,6 +514,10 @@ const Renderer = async options => {
                   tgvi = geometry.vIndices
                 }
                 
+                if(geometry.isPartitioned){
+                  tgvi = geometry.partitions[0]
+                }
+                
                 var toffsets = []
                 for(var i = 0; i < geometry.vertices.length; i+=3){
                   toffsets.push(geometry.offsets[i+0],
@@ -987,10 +991,17 @@ const Renderer = async options => {
               
               if(geometry?.vertices?.length){
                 
+                var tgvi
+                if(geometry.isPartitioned){
+                  tgvi = geometry.partitions[0]
+                }else{
+                  tgvi = geometry.vIndices
+                }
+                
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
-                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, geometry.vIndices, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, geometry.vertices, ctx.STATIC_DRAW)
                 dset.locPosition = ctx.getAttribLocation(dset.program, "position")
@@ -3281,7 +3292,6 @@ const VideoToImage = video => {
 }
 
 const InitPartitioning = geometry => {
-  console.log(geometry)
   var ax=0, ay=0, az=0, ct=0
   var minX = 1e6
   var minY = 1e6
@@ -3310,12 +3320,23 @@ const InitPartitioning = geometry => {
     ay /= ct
     az /= ct
     
-    if(ax > 0){
-      //partitions[0].vIndices.push()
-    }else{
-      //partitions[1].vIndices.push()
+    for(var m = 0; m < 3; m++){
+      if(ax > 0){
+        partitions[0].vIndices.push(i/3+m)
+        partitions[0].oIndices.push(i/3+m)
+        partitions[0].uvIndices.push(i/3+m)
+        partitions[0].nVecIndices.push(i/3+m)
+        partitions[0].nIndices.push(i/3*2+m+3)
+      }else{
+        partitions[1].vIndices.push(i/3+m)
+        partitions[1].oIndices.push(i/3+m)
+        partitions[1].uvIndices.push(i/3+m)
+        partitions[1].nVecIndices.push(i/3+m)
+        partitions[1].nIndices.push(i/3*2+m+3)
+      }
     }
   }  
+  geometry.isPartitioned = true
 }  
 
 const BindImage = (gl, resource, binding, textureMode='image', tval=-1, geometry={}, involveCache = true) => {
