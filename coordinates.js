@@ -994,7 +994,7 @@ const Renderer = async options => {
                 var tgvi, tvertices
                 if(geometry.isPartitioned){
                   //tgvi = geometry.partitions[0].vIndices
-                  tvertices = geometry.partitions[0].vertices
+                  tvertices = geometry.partitions[1].vertices
                 }else{
                   //tgvi = geometry.vIndices
                   tvertices = geometry.vertices
