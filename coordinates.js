@@ -3316,6 +3316,7 @@ const InitPartitioning = geometry => {
       ax += geometry.vertices[i+0+m*3]
       ay += geometry.vertices[i+1+m*3]
       az += geometry.vertices[i+2+m*3]
+      ct++
     }
     ax /= ct
     ay /= ct
