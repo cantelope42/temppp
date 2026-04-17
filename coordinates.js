@@ -515,7 +515,6 @@ const Renderer = async options => {
                 }
                 
                 if(geometry.isPartitioned){
-                  console.log('ooops')
                   tvertices = new Float32Array(geometry.partitions.parts[0].vertices)
                 }
                 
@@ -990,7 +989,6 @@ const Renderer = async options => {
               // vertices
               
               if(geometry?.vertices?.length){
-                
                 var tvertices
                 if(geometry.isPartitioned){
                   var px = renderer.x
