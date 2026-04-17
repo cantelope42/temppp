@@ -991,9 +991,9 @@ const Renderer = async options => {
               if(geometry?.vertices?.length){
                 var tvertices
                 if(geometry.isPartitioned){
-                  var px = renderer.x
-                  var py = renderer.y
-                  var pz = renderer.z
+                  var px = renderer.x / geometry.partitionSize | 0
+                  var py = renderer.y / geometry.partitionSize | 0
+                  var pz = renderer.z / geometry.partitionSize | 0
                   var ctX = geometry.partitions.ctX
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
