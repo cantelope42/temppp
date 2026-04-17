@@ -1000,7 +1000,7 @@ const Renderer = async options => {
                   
                   var part = (renderer.t*8|0)%geometry.partitions.parts.length //Math.min(geometry.partitions.parts.length,
                              //         Math.max(0, px + py * ctX + pz * ctX * ctY))
-                  tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
+                  tvertices = new Float32Array(geometry.partitions.parts[0].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
@@ -1008,8 +1008,8 @@ const Renderer = async options => {
                 
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 
-                //ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
-                //ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
+                ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
+                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tvertices, ctx.STATIC_DRAW)
                 dset.locPosition = ctx.getAttribLocation(dset.program, "position")
