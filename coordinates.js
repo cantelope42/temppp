@@ -3399,8 +3399,8 @@ const InitPartitioning = geometry => {
         g.partitions.parts[part].normals.push(g.normals[i*2+m*6+k*2+3])
       }
     }
+    */
   }
-  */
   geometry.isPartitioned = true
 }  
 
