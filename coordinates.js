@@ -996,11 +996,11 @@ const Renderer = async options => {
                   var px = renderer.x
                   var py = renderer.y
                   var pz = renderer.z
-                  var ctX = geometry.partitions.ptX
-                  var ctY = geometry.partitions.ptY
-                  var ctZ = geometry.partitions.ptZ
-                  var part = Math.min(geometry.partitions.parts.length,
-                                      Math.max(0, px + py * ptX + pz * ptX * ptY))
+                  var ctX = geometry.partitions.ctX
+                  var ctY = geometry.partitions.ctY
+                  var ctZ = geometry.partitions.ctZ
+                  var part = 1 //Math.min(geometry.partitions.parts.length,
+                             //         Math.max(0, px + py * ctX + pz * ctX * ctY))
                   tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
                 }else{
                   tvertices = geometry.vertices
