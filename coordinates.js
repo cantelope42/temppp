@@ -3310,7 +3310,7 @@ const InitPartitioning = geometry => {
   var maxY = -1e6
   var maxZ = -1e6
   var x = 0, y = 0, z = 0
-
+  console.log('vertices', g.vertices)
   for(var i = 0; i < g.vertices.length; i+=9){
     for(var m = 0; m < 3; m++){
       x = g.vertices[i+0+m*3]
