@@ -3350,6 +3350,31 @@ const InitPartitioning = geometry => {
   }
   
   for(var i = 0; i < g.vertices.length; i+=9){
+    
+    for(var m = 0; m < 3; m++){
+      ax += g.vertices[i+0+m*3]
+      ay += g.vertices[i+1+m*3]
+      az += g.vertices[i+2+m*3]
+      ct++
+    }
+    ax /= ct
+    ay /= ct
+    az /= ct
+    var px = (ax + (maxX-minX)/2) / g.partitionSize | 0
+    var py = (ay + (maxY-minY)/2) / g.partitionSize | 0
+    var pz = (az + (maxZ-minZ)/2) / g.partitionSize | 0
+    var part = px + py * ctX + pz * ctX * ctY
+    for(var m = 0; m<9; m++){
+      g.partitions.parts[part].vertices.push(g.vertices[i+m])
+      g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
+      g.partitions.parts[part].normals.push(g.normals[(i+m)*2])
+      g.partitions.parts[part].normals.push(g.normals[(i+m)*2+3])
+    }
+    for(var m = 0; m<6; m++){
+      g.partitions.parts[part].uvs.push(g.uvs[i/3*2+m])
+    }
+    
+    /*
     for(var m = 0; m < 3; m++){
       ax += g.vertices[i+0+m*3]
       ay += g.vertices[i+1+m*3]
@@ -3375,6 +3400,7 @@ const InitPartitioning = geometry => {
       }
     }
   }
+  */
   geometry.isPartitioned = true
 }  
 
