@@ -515,7 +515,7 @@ const Renderer = async options => {
                 }
                 
                 if(geometry.isPartitioned){
-                  tvertices = new Float32Array(geometry.partitions[0].vertices)
+                  tvertices = new Float32Array(geometry.partitions.parts[0].vertices)
                 }
                 
                 var toffsets = []
@@ -996,9 +996,12 @@ const Renderer = async options => {
                   var px = renderer.x
                   var py = renderer.y
                   var pz = renderer.z
+                  var ctX = geometry.partitions.ctX
+                  var ctY = geometry.partitions.ctY
+                  var ctZ = geometry.partitions.ctZ
                   var part = Math.min(geometry.partitions.length,
                                       Math.max(0, px + py * ctX + pz * ctX * ctY))
-                  tvertices = new Float32Array(geometry.partitions[part].vertices)
+                  tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
@@ -3324,24 +3327,27 @@ const InitPartitioning = geometry => {
   var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
   var ctY = ((maxY-minY) / g.partitionSize | 0) + 1
   var ctZ = ((maxZ-minZ) / g.partitionSize | 0) + 1
-  g.partitions = Array(ctX*ctY*ctZ).fill().map((v, i) => {
-    x = (maxX-minX)/2 + ((i%ctX) - ctX/2 + .5) * (maxX-minX) / ctX
-    y = (maxY-minY)/2 + (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) / ctY
-    z = (maxZ-minZ)/2 + ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) / ctZ
-    return {
-      cx: x,
-      cy: y,
-      cz: z,
-      vertices: [],
-      uvs: [],
-      normals: [],
-      normalVecs: [],
-      vIndices: [],
-      uIndices: [],
-      nIndices: [],
-      nvIndices: [],
-    }
-  })
+  g.partitions = {
+    ctX, ctY, ctZ,
+    parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
+      x = (maxX-minX)/2 + ((i%ctX) - ctX/2 + .5) * (maxX-minX) / ctX
+      y = (maxY-minY)/2 + (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) / ctY
+      z = (maxZ-minZ)/2 + ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) / ctZ
+      return {
+        cx: x,
+        cy: y,
+        cz: z,
+        vertices: [],
+        uvs: [],
+        normals: [],
+        normalVecs: [],
+        vIndices: [],
+        uIndices: [],
+        nIndices: [],
+        nvIndices: [],
+      }
+    })
+  }
   
   for(var i = 0; i < g.vertices.length; i+=9){
     for(var m = 0; m < 3; m++){
