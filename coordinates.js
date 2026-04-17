@@ -515,7 +515,7 @@ const Renderer = async options => {
                 }
                 
                 if(geometry.isPartitioned){
-                  tvertices = geometry.partitions[0].vertices
+                  tvertices = new Float32Array(geometry.partitions[0].vertices)
                 }
                 
                 var toffsets = []
@@ -993,7 +993,12 @@ const Renderer = async options => {
                 
                 var tvertices
                 if(geometry.isPartitioned){
-                  tvertices = new Float32Array(geometry.partitions[0].vertices)
+                  var px = renderer.x
+                  var py = renderer.y
+                  var pz = renderer.z
+                  var part = Math.min(geometry.partitions.length,
+                                      Math.max(0, px + py * ctX + pz * ctX * ctY))
+                  tvertices = new Float32Array(geometry.partitions[part].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
