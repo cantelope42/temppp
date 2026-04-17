@@ -991,9 +991,20 @@ const Renderer = async options => {
               if(geometry?.vertices?.length){
                 var tvertices
                 if(geometry.isPartitioned){
-                  var px = renderer.x / geometry.partitionSize | 0
-                  var py = renderer.y / geometry.partitionSize | 0
-                  var pz = renderer.z / geometry.partitionSize | 0
+                  var px, py, pz
+                  if(renderer.cameraMode == 'fps'){
+                    px = -renderer.x / geometry.partitionSize | 0
+                    py = -renderer.y / geometry.partitionSize | 0
+                    pz = -renderer.z / geometry.partitionSize | 0
+                  }else{
+                    var d = Math.hypot(renderer.x, renderer.y, renderer.z)
+                    var p1 = -renderer.yaw
+                    var p2 = -renderer.pitch + Math.PI/2
+                    px = S(p1) * S(p2) * d
+                    py = C(p2) * d
+                    pz = C(p1) * S(p2) * d
+                  }
+                  
                   var ctX = geometry.partitions.ctX
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
