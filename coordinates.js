@@ -3363,9 +3363,9 @@ const InitPartitioning = geometry => {
     for(var m = 0; m < 3; m++){
       for(var k = 0; k < 3; k++){
         var idx = i+m*3+k
-        var px = (ax+(maxX-minX)/2)/g.partitionSize * ctX | 0
-        var py = (ay+(maxY-minY)/2)/g.partitionSize * ctY | 0
-        var pz = (az+(maxZ-minZ)/2)/g.partitionSize * ctZ | 0
+        var px = (ax+(maxX-minX)/2)/g.partitionSize | 0
+        var py = (ay+(maxY-minY)/2)/g.partitionSize | 0
+        var pz = (az+(maxZ-minZ)/2)/g.partitionSize | 0
         var part = px + py * ctX + pz * ctX * ctY
         g.partitions.parts[part].vertices.push(g.vertices[idx])
         g.partitions.parts[part].uvs.push(g.uvs[idx])
