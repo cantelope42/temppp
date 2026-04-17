@@ -985,7 +985,6 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
               }
-              
 
               // vertices
               
@@ -1010,8 +1009,8 @@ const Renderer = async options => {
                 
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 
-                ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
-                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
+                //ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
+                //ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tvertices, ctx.STATIC_DRAW)
                 dset.locPosition = ctx.getAttribLocation(dset.program, "position")
@@ -3368,7 +3367,7 @@ const InitPartitioning = geometry => {
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
       g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
       g.partitions.parts[part].normals.push(g.normals[(i+m)*2])
-      g.partitions.parts[part].normals.push(g.normals[(i+m)*2+3])
+      g.partitions.parts[part].normals.push(g.normals[(i+m)*2+9])
     }
     for(var m = 0; m<6; m++){
       g.partitions.parts[part].uvs.push(g.uvs[i/3*2+m])
