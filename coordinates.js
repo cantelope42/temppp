@@ -3311,9 +3311,9 @@ const InitPartitioning = geometry => {
       if(x < minX) minX = x
       if(y < minY) minY = y
       if(z < minZ) minZ = z
-      if(x < maxX) maxX = x
-      if(y < maxY) maxY = y
-      if(z < maxZ) maxZ = z
+      if(x > maxX) maxX = x
+      if(y > maxY) maxY = y
+      if(z > maxZ) maxZ = z
     }
   }
   var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
