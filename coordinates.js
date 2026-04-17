@@ -3308,12 +3308,12 @@ const InitPartitioning = geometry => {
       x = g.vertices[i+0+m*3]
       y = g.vertices[i+1+m*3]
       z = g.vertices[i+2+m*3]
-      if(minX < x) minX = x
-      if(minY < y) minY = y
-      if(minZ < z) minZ = z
-      if(maxX > x) maxX = x
-      if(maxY > y) maxY = y
-      if(maxZ > z) maxZ = z
+      if(x < minX) minX = x
+      if(y < minY) minY = y
+      if(z < minZ) minZ = z
+      if(x < maxX) maxX = x
+      if(y < maxY) maxY = y
+      if(z < maxZ) maxZ = z
     }
   }
   var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
