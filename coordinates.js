@@ -3319,7 +3319,6 @@ const InitPartitioning = geometry => {
   var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
   var ctY = ((maxY-minY) / g.partitionSize | 0) + 1
   var ctZ = ((maxZ-minZ) / g.partitionSize | 0) + 1
-  console.log(ctX, ctY, ctZ, maxX, maxY, maxZ, g.partitionSize)
   g.partitions = Array(ctX*ctY*ctZ).fill().map((v, i) => {
     x = minX + (maxX-minX)/2 + ((i%ctX) - ctX/2 + .5) * (maxX-minX) / ctX
     y = minY + (maxY-minY)/2 + (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) / ctY
@@ -3353,9 +3352,9 @@ const InitPartitioning = geometry => {
     for(var m = 0; m < 3; m++){
       for(var k = 0; k < 3; k++){
         var idx = i+m*3+k
-        var part = (ax/(maxX-minX) | 0) +
-                   (ay/(maxY-minY) | 0) * ctX +
-                   (az/(maxZ-minZ) | 0) * ctX * ctY
+        var part = (ax/(maxX-minX) | 0) * ctX +
+                   (ay/(maxY-minY) | 0) * ctX * ctY +
+                   (az/(maxZ-minZ) | 0) * ctX * ctY * ctZ
         g.partitions[part].vertices.push(g.vertices[idx])
         g.partitions[part].uvs.push(g.uvs[idx])
         g.partitions[part].normalVecs.push(g.normalVecs[idx])
