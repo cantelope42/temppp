@@ -998,8 +998,7 @@ const Renderer = async options => {
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  var part = //(renderer.t*8|0)%geometry.partitions.parts.length     
-                             Math.min(geometry.partitions.parts.length,
+                  var part = Math.min(geometry.partitions.parts.length,
                                       Math.max(0, px + py * ctX + pz * ctX * ctY))
                   tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
                 }else{
@@ -3321,9 +3320,9 @@ const InitPartitioning = geometry => {
       if(z > maxZ) maxZ = z
     }
   }
-  var ctX = ((maxX-minX) / (g.partitionSize+.001) | 0) + 1
-  var ctY = ((maxY-minY) / (g.partitionSize+.001) | 0) + 1
-  var ctZ = ((maxZ-minZ) / (g.partitionSize+.001) | 0) + 1
+  var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
+  var ctY = ((maxY-minY) / g.partitionSize | 0) + 1
+  var ctZ = ((maxZ-minZ) / g.partitionSize | 0) + 1
   g.partitions = {
     ctX, ctY, ctZ,
     parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
