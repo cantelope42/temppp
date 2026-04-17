@@ -993,7 +993,7 @@ const Renderer = async options => {
                 
                 var tvertices
                 if(geometry.isPartitioned){
-                  tvertices = new Float32Array(geometry.partitions[1].vertices)
+                  tvertices = new Float32Array(geometry.partitions[0].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
@@ -3356,7 +3356,7 @@ const InitPartitioning = geometry => {
         var py = (ay+(maxY-minY)/2)/(maxY-minY) * ctY | 0
         var pz = (az+(maxZ-minZ)/2)/(maxZ-minZ) * ctZ | 0
         var part = px + py * ctX + pz * ctX * ctY
-        console.log(px, py, pz, ctX, ctY, ctZ, part)
+        //console.log(px, py, pz, ctX, ctY, ctZ, part)
         g.partitions[part].vertices.push(g.vertices[idx])
         g.partitions[part].uvs.push(g.uvs[idx])
         g.partitions[part].normalVecs.push(g.normalVecs[idx])
