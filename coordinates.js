@@ -998,15 +998,14 @@ const Renderer = async options => {
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  var part = (renderer.t*8|0)%geometry.partitions.parts.length //Math.min(geometry.partitions.parts.length,
-                             //         Math.max(0, px + py * ctX + pz * ctX * ctY))
+                  var part = //(renderer.t*8|0)%geometry.partitions.parts.length     
+                             Math.min(geometry.partitions.parts.length,
+                                      Math.max(0, px + py * ctX + pz * ctX * ctY))
                   tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
                 var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
-                
-                ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
                 
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
