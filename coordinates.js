@@ -5382,6 +5382,8 @@ const BasicShader = async (renderer, options=[]) => {
           
         gl.useProgram(dset.program)
         
+        console.log('oops')
+        
         gl.bindBuffer(gl.ARRAY_BUFFER, geometry.vertex_buffer)
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
         dset.locPosition = gl.getAttribLocation(dset.program, "position")
