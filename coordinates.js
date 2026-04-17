@@ -3358,9 +3358,9 @@ const InitPartitioning = geometry => {
     ax /= ct
     ay /= ct
     az /= ct
-    var px = (ax / g.partitionSize + .5) | 0
-    var py = (ay / g.partitionSize + .5) | 0
-    var pz = (az / g.partitionSize + .5) | 0
+    var px = ((ax - minX) / g.partitionSize) | 0
+    var py = ((ay - minY) / g.partitionSize) | 0
+    var pz = ((az - minZ) / g.partitionSize) | 0
     var part = px + py * ctX + pz * ctX * ctY
     for(var m = 0; m<9; m++){
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
