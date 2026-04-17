@@ -3311,7 +3311,6 @@ const InitPartitioning = geometry => {
   var maxY = -1e6
   var maxZ = -1e6
   var x = 0, y = 0, z = 0
-  console.log('vertices', g)
   for(var i = 0; i < g.vertices.length; i+=9){
     for(var m = 0; m < 3; m++){
       x = g.vertices[i+0+m*3]
@@ -3328,7 +3327,6 @@ const InitPartitioning = geometry => {
   var ctX = ((maxX-minX) / g.partitionSize | 0) + 1
   var ctY = ((maxY-minY) / g.partitionSize | 0) + 1
   var ctZ = ((maxZ-minZ) / g.partitionSize | 0) + 1
-  console.log(ctX, ctY, ctZ, maxX, minX, maxY, minY, maxZ, minZ)
   g.partitions = {
     ctX, ctY, ctZ,
     parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
@@ -3365,9 +3363,9 @@ const InitPartitioning = geometry => {
     for(var m = 0; m < 3; m++){
       for(var k = 0; k < 3; k++){
         var idx = i+m*3+k
-        var px = (ax+(maxX-minX)/2)/(maxX-minX) * ctX | 0
-        var py = (ay+(maxY-minY)/2)/(maxY-minY) * ctY | 0
-        var pz = (az+(maxZ-minZ)/2)/(maxZ-minZ) * ctZ | 0
+        var px = (ax+(maxX-minX)/2)/g.partitionSize * ctX | 0
+        var py = (ay+(maxY-minY)/2)/g.partitionSize * ctY | 0
+        var pz = (az+(maxZ-minZ)/2)/g.partitionSize * ctZ | 0
         var part = px + py * ctX + pz * ctX * ctY
         g.partitions.parts[part].vertices.push(g.vertices[idx])
         g.partitions.parts[part].uvs.push(g.uvs[idx])
