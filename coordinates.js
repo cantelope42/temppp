@@ -515,6 +515,7 @@ const Renderer = async options => {
                 }
                 
                 if(geometry.isPartitioned){
+                  console.log('ooops')
                   tvertices = new Float32Array(geometry.partitions.parts[0].vertices)
                 }
                 
@@ -5381,8 +5382,6 @@ const BasicShader = async (renderer, options=[]) => {
       if (gl.getProgramParameter(dset.program, gl.LINK_STATUS)) {
           
         gl.useProgram(dset.program)
-        
-        console.log('oops')
         
         gl.bindBuffer(gl.ARRAY_BUFFER, geometry.vertex_buffer)
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
