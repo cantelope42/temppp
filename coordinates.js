@@ -1862,6 +1862,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
   var size                     = 1
   var isPartitioned            = false
   var partitionSize            = 1e5
+  var partitionRadius          = 0
   var averageNormals           = false
   var subs                     = 0
   var sphereize                = 0
@@ -1959,6 +1960,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
       case 'shownormals'        : showNormals = !!geoOptions[key]; break
       case 'ispartitioned'      : isPartitioned = !!geoOptions[key]; break
       case 'partitionsize'      : partitionSize = +geoOptions[key]; break
+      case 'partitionradius'    : partitionRadius = +geoOptions[key]; break
       case 'syncnormals'        : syncNormals = !!geoOptions[key]; break
       case 'offsetx'            : offsetX = geoOptions[key]; break
       case 'offsety'            : offsetY = geoOptions[key]; break
@@ -3158,7 +3160,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
     FlatShadingNormalVec_Index_Buffer, fsnvstate,
     nstate, vstate, nvstate, shapeData, stride,
     oUvs, oScaleUVX, oScaleUVY, isPartitioned,
-    partitionSize,
+    partitionSize, partitionRadius
   }
   Object.keys(updateGeometry).forEach((key, idx) => {
     geometry[key] = updateGeometry[key]
