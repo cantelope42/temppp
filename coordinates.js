@@ -993,26 +993,37 @@ const Renderer = async options => {
                 if(geometry.isPartitioned){
                   var px, py, pz
                   if(renderer.cameraMode == 'fps'){
-                    px = -renderer.x / geometry.partitionSize | 0
-                    py = -renderer.y / geometry.partitionSize | 0
-                    pz = -renderer.z / geometry.partitionSize | 0
+                    px = -renderer.x
+                    py = -renderer.y
+                    pz = -renderer.z
+                    
                   }else{
                     var d = Math.hypot(renderer.x, renderer.y, renderer.z)
                     var p1 = renderer.yaw
                     var p2 = -renderer.pitch + Math.PI/2
-                    px = S(p1) * S(p2) * d / geometry.partitionSize | 0
-                    py = C(p2) * d / geometry.partitionSize | 0
-                    pz = C(p1) * S(p2) * d / geometry.partitionSize | 0
+                    px = S(p1) * S(p2) * d
+                    py = C(p2) * d
+                    pz = C(p1) * S(p2) * d
                   }
                   
                   var ctX = geometry.partitions.ctX
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  var part = Math.min(geometry.partitions.parts.length-1,
-                                      Math.max(0, px + py * ctX + pz * ctX * ctY))
-                  console.log(geometry.partitions.parts.length, part, px, py, pz, ctX, ctY, ctZ)
-                  tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
+                  //var part = Math.min(geometry.partitions.parts.length-1,
+                  //                    Math.max(0, px + py * ctX + pz * ctX * ctY))
+                  var mind = 6e6, pIdx = -1
+                  
+                  for(var i = 0; i < geometry.partitions.parts.length; i++){
+                    var x2 = geometry.partitions.parts[i].cx
+                    var y2 = geometry.partitions.parts[i].cy
+                    var z2 = geometry.partitions.parts[i].cz
+                    if((d=Math.hypot(px-x2, py-y2, pz-z2)) < mind){
+                      mind = d
+                      pIdx = i
+                    }
+                  }
+                  tvertices = new Float32Array(geometry.partitions.parts[pIdx].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
@@ -3338,9 +3349,9 @@ const InitPartitioning = geometry => {
   g.partitions = {
     ctX, ctY, ctZ,
     parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
-      x = ((i%ctX) - ctX/2 + .5) * (maxX-minX) / ctX - minX
-      y = (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) / ctY - minY
-      z = ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) / ctZ - minZ
+      x = ((i%ctX) - ctX/2 + .5) * (maxX-minX) // ctX - minX
+      y = (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) // ctY - minY
+      z = ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) // ctZ - minZ
       return {
         cx: x,
         cy: y,
