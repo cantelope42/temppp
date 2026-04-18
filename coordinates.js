@@ -998,7 +998,6 @@ const Renderer = async options => {
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
               var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
-              var tfsnvi = Array(tflatShadingNormalVec.length/3|0).fill().map((v, i) => i)
               var tgni
               if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
@@ -1046,9 +1045,9 @@ const Renderer = async options => {
               
               if(geometry.flatShadingNormalVecs.length){
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
-                ctx.bufferData(ctx.ARRAY_BUFFER, tfsnormalVecs, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVecs, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
-                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tfsnvi, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, geometry.fsnVecIndices, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
                 dset.locFlatShadingNormalVec= ctx.getAttribLocation(dset.program, "flatShadingNormalVec")
