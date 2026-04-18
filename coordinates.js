@@ -1013,7 +1013,7 @@ const Renderer = async options => {
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
               var tgni = []
-              if(geometry.showNormals)
+              //if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
               // dynamically resize UVs, if needed
@@ -1028,6 +1028,7 @@ const Renderer = async options => {
                 }
               }
 
+/*
               // bind buffers
               ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.uv_buffer)
               ctx.bufferData(ctx.ARRAY_BUFFER, tuvs, ctx.STATIC_DRAW)
@@ -1057,7 +1058,6 @@ const Renderer = async options => {
               //normals (for flat shading)
               
               if(geometry.flatShadingNormalVecs.length){
-                //console.log('t-flatShadingNormalVecs: ', tfsnvi, tflatShadingNormalVecs)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
@@ -1071,6 +1071,7 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
               }
+              */
 
               // vertices
               
@@ -1105,7 +1106,7 @@ const Renderer = async options => {
               // normals lines drawn, optionally
               ctx.uniform1f(dset.locRenderNormals, geometry.showNormals ? 1 : 0)
               if(geometry.showNormals && geometry?.normals?.length){
-                //ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.normal_buffer)
+                ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.normal_buffer)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Normal_Index_Buffer)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgni, ctx.STATIC_DRAW)
                 dset.locNormal = ctx.getAttribLocation(dset.program, "normal")
