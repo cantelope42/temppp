@@ -998,7 +998,7 @@ const Renderer = async options => {
                     pz = -renderer.z
                   }else{
                     var d = Math.hypot(renderer.x, renderer.y, renderer.z)
-                    var p1 = renderer.yaw
+                    var p1 = -renderer.yaw
                     var p2 = -renderer.pitch + Math.PI/2
                     px = S(p1) * S(p2) * d
                     py = C(p2) * d
