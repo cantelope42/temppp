@@ -985,7 +985,7 @@ const Renderer = async options => {
                     for(var i = 0; i < part.normalVecs.length; i++)
                       normalVecs.push(part.normalVecs[i])
                     for(var i = 0; i < part.flatShadingNormalVecs.length; i++)
-                      flatShadingNormalVecs.push(part.normalVecs[i])
+                      flatShadingNormalVecs.push(part.flatShadingNormalVecs[i])
                     if(geometry.showNormals)
                       for(var i = 0; i < part.normals.length; i++)
                         normals.push(part.normals[i])
@@ -1057,7 +1057,7 @@ const Renderer = async options => {
               
               //normals (for flat shading)
               
-              if(0 &&geometry.flatShadingNormalVecs.length){
+              if(geometry.flatShadingNormalVecs.length){
                 console.log('t-flatShadingNormalVecs: ', tfsnvi, tflatShadingNormalVecs)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
@@ -1085,7 +1085,6 @@ const Renderer = async options => {
                 ctx.enableVertexAttribArray(dset.locPosition)
 
                 // offsets
-                /*
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.offset_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, toffsets, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Offset_Index_Buffer)
@@ -1094,7 +1093,6 @@ const Renderer = async options => {
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
-                */
                 
                 ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
                                     ctx.TRIANGLES,
