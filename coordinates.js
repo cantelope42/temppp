@@ -1012,12 +1012,12 @@ const Renderer = async options => {
               var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
-              var tgni
+              var tgni = []
               if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
-               console.log(tgoi, tgvi, tgui, tgnvi, tfsnvi, tgni) 
-               console.log(tvertices, toffsets, tuvs, tnormalVecs, tflatShadingNormalVecs, tnormals) 
+               //console.log(tgoi, tgvi, tgui, tgnvi, tfsnvi, tgni) 
+               //console.log(tvertices, toffsets, tuvs, tnormalVecs, tflatShadingNormalVecs, tnormals) 
               // dynamically resize UVs, if needed
               
               if(geometry.oScaleUVX != geometry.scaleUVX ||
