@@ -1009,7 +1009,7 @@ const Renderer = async options => {
               }
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
               var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
-              var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
+              var tgui = Array(tuvs.length/3|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
               var tgni = []
