@@ -1005,6 +1005,7 @@ const Renderer = async options => {
                     p = Math.atan2(py, pz) + renderer.pitch
                     py = S(p) * d
                     pz = C(p) * d
+                    d = Math.hypot(px, pz)
                     p = Math.atan2(px, pz) - renderer.yaw
                     px = S(p) * d
                     pz = C(p) * d
@@ -1024,14 +1025,12 @@ const Renderer = async options => {
                     var x2 = part.cx
                     var y2 = part.cy
                     var z2 = part.cz
-                    if(Rn() < .1) console.log(x2,y2,z2, px, py, pz,ls,part.vertices.length)
                     if(Math.hypot(x2-px, y2-py, z2-pz) < ls){
                       for(var i = 0; i < part.vertices.length; i++){
                         a.push(part.vertices[i])
                       }
                     }
                   })
-                  console.log(a)
                   tvertices = new Float32Array(a)
                 }else{
                   tvertices = geometry.vertices
