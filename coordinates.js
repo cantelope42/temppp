@@ -1018,9 +1018,9 @@ const Renderer = async options => {
                   var ls = geometry.partitionRadius
                   var ls2 = geometry.partitionSize
                   var a = []
-                  var minX = geometry.partions.minX
-                  var minY = geometry.partions.minY
-                  var minZ = geometry.partions.minZ
+                  var minX = geometry.partitions.minX
+                  var minY = geometry.partitions.minY
+                  var minZ = geometry.partitions.minZ
                   geometry.partitions.parts.forEach((part, pIdx) => {
                     var x2 = part.cx * ls2
                     var y2 = part.cy * ls2
