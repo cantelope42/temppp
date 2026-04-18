@@ -965,8 +965,8 @@ const Renderer = async options => {
                 var ls2 = geometry.partitionSize
                 var verts = []
                 var uvs = []
-                var normals = []
-                if(geometry.showNormals) var normalVecs = []
+                var normalVecs = []
+                if(geometry.showNormals) var normals = []
                 geometry.partitions.parts.forEach((part, pIdx) => {
                   var cx = part.cx
                   var cy = part.cy
