@@ -1013,11 +1013,9 @@ const Renderer = async options => {
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
               var tgni = []
-              if(geometry.showNormals)
+              //if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
-               //console.log(tgoi, tgvi, tgui, tgnvi, tfsnvi, tgni) 
-               //console.log(tvertices, toffsets, tuvs, tnormalVecs, tflatShadingNormalVecs, tnormals) 
               // dynamically resize UVs, if needed
               
               if(geometry.oScaleUVX != geometry.scaleUVX ||
@@ -1058,7 +1056,7 @@ const Renderer = async options => {
               
               //normals (for flat shading)
               
-              if(0 && geometry.flatShadingNormalVecs.length){
+              if(geometry.flatShadingNormalVecs.length){
                 //console.log('t-flatShadingNormalVecs: ', tfsnvi, tflatShadingNormalVecs)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
@@ -1085,7 +1083,6 @@ const Renderer = async options => {
                 ctx.vertexAttribPointer(dset.locPosition, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locPosition)
 
-                 /*
                 // offsets
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.offset_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, toffsets, ctx.STATIC_DRAW)
@@ -1095,12 +1092,10 @@ const Renderer = async options => {
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
-                */
                 
-                /*console.log(tvertices, toffsets, tuvs, tnormalVecs,
+                console.log(tvertices, toffsets, tuvs, tnormalVecs,
                             tflatShadingNormalVecs, tnormals)
                 console.log(tgoi, tgvi, tgui, tgnvi, tfsnvi, tgni)
-                */
 
               if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
