@@ -1085,6 +1085,7 @@ const Renderer = async options => {
                 ctx.vertexAttribPointer(dset.locPosition, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locPosition)
 
+                 /*
                 // offsets
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.offset_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, toffsets, ctx.STATIC_DRAW)
@@ -1094,12 +1095,12 @@ const Renderer = async options => {
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
+                */
                 
-                /*ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
+                ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
                                     ctx.TRIANGLES,
                                   geometry.vertices.length/3|0,
                                   ctx.UNSIGNED_INT,0)
-                */
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
 
