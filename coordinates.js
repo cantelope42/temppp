@@ -1024,6 +1024,7 @@ const Renderer = async options => {
                     }
                   }
                   */
+                  console.log(part, px, py, pz, ctX, ctY, ctZ, geometry.partitions.parts.length)
                   tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
                 }else{
                   tvertices = geometry.vertices
