@@ -3409,6 +3409,7 @@ const InitPartitioning = geometry => {
         normals: [],
         normalVecs: [],
         offsets: [],
+        flatShadingNormalVecs: [],
       }
     })
   }
