@@ -1021,6 +1021,7 @@ const Renderer = async options => {
                   var ls = geometry.partitionRadius
                   var a = []
                   geometry.partitions.parts.forEach((part, pIdx) => {
+                    if(Rn() < .1) console.log(part)
                     var x2 = part.cx
                     var y2 = part.cy
                     var z2 = part.cz
