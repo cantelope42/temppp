@@ -1001,7 +1001,7 @@ const Renderer = async options => {
               }else{
                 tvertices = geometry.vertices
                 toffsets = geometry.offsets
-                tuvs= geometry.uvs
+                tuvs = geometry.uvs
                 tflatShadingNormalVecs  = geometry.flatShadingNormalVecs
                 tnormalVecs = geometry.normalVecs
                 if(geometry.showNormals)
@@ -1058,6 +1058,7 @@ const Renderer = async options => {
               //normals (for flat shading)
               
               if(geometry.flatShadingNormalVecs.length){
+                console.log('t-flatShadingNormalVecs: ', tfsnvi, tflatShadingNormalVecs)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
@@ -1087,6 +1088,7 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.offset_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, toffsets, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Offset_Index_Buffer)
+                console.log('t-offsets: ', tgoi, toffsets)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgoi, ctx.STATIC_DRAW)
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
