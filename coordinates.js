@@ -1009,10 +1009,11 @@ const Renderer = async options => {
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  //var part = Math.min(geometry.partitions.parts.length-1,
-                  //                    Math.max(0, px + py * ctX + pz * ctX * ctY))
+                  var part = Math.min(geometry.partitions.parts.length-1,
+                                      Math.max(0, px + py * ctX + pz * ctX * ctY))
                   var mind = 6e6, pIdx = -1
                   
+                  /*
                   for(var i = 0; i < geometry.partitions.parts.length; i++){
                     var x2 = geometry.partitions.parts[i].cx
                     var y2 = geometry.partitions.parts[i].cy
@@ -1022,7 +1023,8 @@ const Renderer = async options => {
                       pIdx = i
                     }
                   }
-                  tvertices = new Float32Array(geometry.partitions.parts[pIdx].vertices)
+                  */
+                  tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
                 }else{
                   tvertices = geometry.vertices
                 }
