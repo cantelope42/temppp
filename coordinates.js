@@ -1019,10 +1019,10 @@ const Renderer = async options => {
                   var ls2 = geometry.partitionSize
                   var a = []
                   geometry.partitions.parts.forEach((part, pIdx) => {
-                    var x2 = part.cx
-                    var y2 = part.cy
-                    var z2 = part.cz
-                    if(Math.hypot((x2-px), (y2-py), (z2-pz)) < ls/ ls2){
+                    var x2 = part.cx * ls2
+                    var y2 = part.cy * ls2
+                    var z2 = part.cz * ls2
+                    if(Math.hypot((x2-px), (y2-py), (z2-pz)) < ls){
                       a.push(...part.vertices)
                       //for(var i = 0; i < part.vertices.length; i++){
                       //  a.push(part.vertices[i])
