@@ -1007,8 +1007,8 @@ const Renderer = async options => {
                 if(geometry.showNormals)
                   tnormals = geometry.normals
               }
-              var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
+              var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
               var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
@@ -1099,6 +1099,7 @@ const Renderer = async options => {
                 
                 console.log(tvertices, toffsets, tuvs, tnormalVecs,
                             tflatShadingNormalVecs, tnormals)
+                console.log(tgoi, tgvi, tgui, tgnvi, tgfsni, tgni)
 
               var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
@@ -1109,7 +1110,6 @@ const Renderer = async options => {
               if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
-                console.log(tgoi, tgvi, tgui, tgnvi, tgni)
                 
                 ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
                                     ctx.TRIANGLES,
