@@ -1019,10 +1019,10 @@ const Renderer = async options => {
                   var ls = geometry.partitionRadius
                   var a = []
                   geometry.partitions.parts.forEach((part, pIdx) => {
-                    var x2 = Math.round((px - part.cx) - .5)
-                    var y2 = Math.round((py - part.cy) - .5)
-                    var z2 = Math.round((pz - part.cz) - .5)
-                    if(Math.hypot(x2, y2, z2) < ls){
+                    var x2 = part.cx
+                    var y2 = part.cy
+                    var z2 = party.cz
+                    if(Math.hypot(x2-px, y2-py, z2-z2) < ls){
                       for(var i = 0; i < part.vertices.length; i++){
                         a.push(part.vertices[i])
                       }
@@ -3359,13 +3359,10 @@ const InitPartitioning = geometry => {
     minY, maxY,
     minZ, maxZ,
     parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
-      x = minX + (maxX-minX) / ctX * ((i%ctX)+.5)
-      y = minY + (maxY-minY) / ctY * ((i%ctY)+.5)
-      z = minZ + (maxZ-minZ) / ctZ * ((i%ctZ)+.5)
       return {
-        cx: x,
-        cy: y,
-        cz: z,
+        cx: 0,
+        cy: 0,
+        cz: 0,
         vertices: [],
         uvs: [],
         normals: [],
@@ -3397,6 +3394,9 @@ const InitPartitioning = geometry => {
     var pz = ((az - minZ) / g.partitionSize | 0)
     var part = px + py * ctX + pz * ctX * ctY
     //console.log(px, py, pz, ctX, ctY, ctZ, part, g.partitions.parts.length, ay, minY, maxY)
+    part.cx = px
+    part.cy = py
+    part.cz = pz
     for(var m = 0; m<9; m++){
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
       g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
