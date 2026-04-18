@@ -1014,9 +1014,9 @@ const Renderer = async options => {
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  px = Math.round((px - geometry.partitions.minX)/ls - .5)
-                  py = Math.round((py - geometry.partitions.minY)/ls - .5)
-                  pz = Math.round((pz - geometry.partitions.minZ)/ls - .5)
+                  //px = Math.round((px - geometry.partitions.minX)/ls - .5)
+                  //py = Math.round((py - geometry.partitions.minY)/ls - .5)
+                  //pz = Math.round((pz - geometry.partitions.minZ)/ls - .5)
                   
                   var ls = geometry.partitionRadius
                   var a = []
