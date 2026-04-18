@@ -1019,12 +1019,9 @@ const Renderer = async options => {
                   var ls2 = geometry.partitionSize
                   var a = []
                   geometry.partitions.parts.forEach((part, pIdx) => {
-                    var cx = part.cx +
-                             geometry.partitions.minX / geometry.partitionSize
-                    var cy = part.cy +
-                             geometry.partitions.minY / geometry.partitionSize
-                    var cz = part.cz +
-                             geometry.partitions.minZ / geometry.partitionSize
+                    var cx = part.cx
+                    var cy = part.cy
+                    var cz = part.cz
                     if(Math.hypot(cx-px, cy-py, cz-pz) < ls){
                       a.push(...part.vertices)
                       //for(var i = 0; i < part.vertices.length; i++){
@@ -3398,9 +3395,9 @@ const InitPartitioning = geometry => {
     var pz = ((az - minZ) / g.partitionSize | 0)
     var part = px + py * ctX + pz * ctX * ctY
     //console.log(px, py, pz, ctX, ctY, ctZ, part, g.partitions.parts.length, ay, minY, maxY)
-    g.partitions.parts[part].cx = (maxX-minX)/ctX * px | 0
-    g.partitions.parts[part].cy = (maxY-minY)/ctY * py | 0
-    g.partitions.parts[part].cz = (maxZ-minZ)/ctZ * pz | 0
+    g.partitions.parts[part].cx = ax
+    g.partitions.parts[part].cy = ay
+    g.partitions.parts[part].cz = az
     for(var m = 0; m<9; m++){
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
       g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
