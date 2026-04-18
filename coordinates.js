@@ -966,7 +966,8 @@ const Renderer = async options => {
                 var verts = []
                 var uvs = []
                 var normalVecs = []
-                var normals = []
+
+                if(geometry.showNormals) var normals = []
                 geometry.partitions.parts.forEach((part, pIdx) => {
                   var cx = part.cx
                   var cy = part.cy
@@ -998,9 +999,8 @@ const Renderer = async options => {
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
               var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
-              var tgni
               if(geometry.showNormals)
-                tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
+                var tgni = Array(tnormals.length/6|0).fill().map((v, i) => i)
               
                 
               // dynamically resize UVs, if needed
