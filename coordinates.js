@@ -996,7 +996,6 @@ const Renderer = async options => {
                     px = -renderer.x
                     py = -renderer.y
                     pz = -renderer.z
-                    
                   }else{
                     var d = Math.hypot(renderer.x, renderer.y, renderer.z)
                     var p1 = renderer.yaw
@@ -3349,9 +3348,9 @@ const InitPartitioning = geometry => {
   g.partitions = {
     ctX, ctY, ctZ,
     parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
-      x = ((i%ctX) - ctX/2 + .5) * (maxX-minX) // ctX - minX
-      y = (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) // ctY - minY
-      z = ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) // ctZ - minZ
+      x = ((i%ctX) - ctX/2 + .5) * (maxX-minX) / ctX - minX
+      y = (((i/ctX|0)%ctY) - ctY/2 + .5) * (maxY-minY) / ctY - minY
+      z = ((i/ctX/ctY|0) - ctZ/2 + .5) * (maxZ-minZ) / ctZ - minZ
       return {
         cx: x,
         cy: y,
