@@ -1025,7 +1025,7 @@ const Renderer = async options => {
                     var x2 = part.cx * ls2
                     var y2 = part.cy * ls2
                     var z2 = part.cz * ls2
-                    if(Math.hypot((x2-px+minX), (y2-py+minY), (z2-pz+minZ)) < ls){
+                    if(Math.hypot((x2-px-minX), (y2-py-minY), (z2-pz-minZ)) < ls){
                       a.push(...part.vertices)
                       //for(var i = 0; i < part.vertices.length; i++){
                       //  a.push(part.vertices[i])
