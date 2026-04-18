@@ -1001,10 +1001,10 @@ const Renderer = async options => {
                     px = 0
                     py = 0
                     pz = -d
-                    p = Math.atan2(py, pz) + renderer.pitch
+                    p = Math.atan2(py, pz) - renderer.pitch
                     py = S(p)
                     pz = C(p)
-                    p = Math.atan2(px, pz) - renderer.yaw + Math.PI
+                    p = Math.atan2(px, pz) - renderer.yaw
                     px = S(p)
                     pz = C(p)
                   }
