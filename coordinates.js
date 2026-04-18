@@ -1024,9 +1024,9 @@ const Renderer = async options => {
                     var x2 = part.cx
                     var y2 = part.cy
                     var z2 = part.cz
-                    if(Math.hypot(x2-px, y2-py, z2-pz) < geometry.partitionRadius){
+                    if(Math.hypot(x2-px, y2-py, z2-pz) < ls){
                       for(var i = 0; i < part.vertices.length; i++){
-                        a.push(part.vertices)
+                        a.push(part.vertices[i])
                       }
                     }
                   })
