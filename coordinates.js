@@ -1013,7 +1013,7 @@ const Renderer = async options => {
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
               var tgni = []
-              //if(geometry.showNormals)
+              if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
               // dynamically resize UVs, if needed
