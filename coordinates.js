@@ -1001,12 +1001,13 @@ const Renderer = async options => {
                     px = 0
                     py = 0
                     pz = -d
+                    d = Math.hypot(py, pz)
                     p = Math.atan2(py, pz) - renderer.pitch
-                    py = S(p)
-                    pz = C(p)
+                    py = S(p) * d
+                    pz = C(p) * d
                     p = Math.atan2(px, pz) - renderer.yaw
-                    px = S(p)
-                    pz = C(p)
+                    px = S(p) * d
+                    pz = C(p) * d
                   }
                   
                   var ctX = geometry.partitions.ctX
