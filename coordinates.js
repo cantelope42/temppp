@@ -1002,7 +1002,7 @@ const Renderer = async options => {
                 tvertices = geometry.vertices
                 toffsets = geometry.offsets
                 tuvs= geometry.uvs
-                tflatShadingNormalVecs  = geometry.flatShadingNormalVec
+                tflatShadingNormalVecs  = geometry.flatShadingNormalVecs
                 tnormalVecs = geometry.normalVecs
                 if(geometry.showNormals)
                   tnormals = geometry.normals
