@@ -1009,9 +1009,9 @@ const Renderer = async options => {
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  px = Math.round((px - geometry.partitions.minX)/geometry.partitionSize)
-                  py = Math.round((py - geometry.partitions.minY)/geometry.partitionSize)
-                  pz = Math.round((pz - geometry.partitions.minZ)/geometry.partitionSize)
+                  px = Math.round((px - geometry.partitions.minX)/geometry.partitionSize + .5)
+                  py = Math.round((py - geometry.partitions.minY)/geometry.partitionSize + .5)
+                  pz = Math.round((pz - geometry.partitions.minZ)/geometry.partitionSize + .5)
                   
                   var part = Math.min(geometry.partitions.parts.length-1,
                                       Math.max(0, px + py * ctX + pz * ctX * ctY))
