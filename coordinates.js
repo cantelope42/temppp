@@ -973,13 +973,13 @@ const Renderer = async options => {
                   var cz = part.cz
                   if(Math.hypot(cx-px, cy-py, cz-pz) < ls){
                     for(var i = 0; i < part.vertices.length; i++)
-                      normalVecs.push(part.normalVecs[i])
+                      verts.push(part.vertices[i])
                     for(var i = 0; i < part.uvs.length; i++)
                       uvs.push(part.uvs[i])
                     for(var i = 0; i < part.normalVecs.length; i++)
                       normalVecs.push(part.normalVecs[i])
                     if(geometry.showNormals)
-                      for(var i = 0; i < part.normas.length; i++)
+                      for(var i = 0; i < part.normals.length; i++)
                         normals.push(part.normals[i])
                   }
                 })
