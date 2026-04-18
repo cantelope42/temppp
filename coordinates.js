@@ -1002,7 +1002,7 @@ const Renderer = async options => {
                     py = 0
                     pz = -d
                     d = Math.hypot(py, pz)
-                    p = Math.atan2(py, pz) - renderer.pitch
+                    p = Math.atan2(py, pz) + renderer.pitch
                     py = S(p) * d
                     pz = C(p) * d
                     p = Math.atan2(px, pz) - renderer.yaw
