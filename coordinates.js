@@ -3395,9 +3395,9 @@ const InitPartitioning = geometry => {
     var pz = ((az - minZ) / g.partitionSize | 0)
     var part = px + py * ctX + pz * ctX * ctY
     //console.log(px, py, pz, ctX, ctY, ctZ, part, g.partitions.parts.length, ay, minY, maxY)
-    //g.partitions.parts[part].cx = px
-    //g.partitions.parts[part].cy = py
-    //g.partitions.parts[part].cz = pz
+    g.partitions.parts[part].cx = (maxX-minX)/ctX * px | 0
+    g.partitions.parts[part].cy = (maxX-minX)/ctY * py | 0
+    g.partitions.parts[part].cz = (maxX-minX)/ctZ * pz | 0
     for(var m = 0; m<9; m++){
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
       g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
