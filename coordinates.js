@@ -1014,27 +1014,24 @@ const Renderer = async options => {
                   var ctY = geometry.partitions.ctY
                   var ctZ = geometry.partitions.ctZ
                   
-                  px = Math.round((px - geometry.partitions.minX)/geometry.partitionSize - .5)
-                  py = Math.round((py - geometry.partitions.minY)/geometry.partitionSize - .5)
-                  pz = Math.round((pz - geometry.partitions.minZ)/geometry.partitionSize - .5)
+                  px = Math.round((px - geometry.partitions.minX)/ls - .5)
+                  py = Math.round((py - geometry.partitions.minY)/ls - .5)
+                  pz = Math.round((pz - geometry.partitions.minZ)/ls - .5)
                   
-                  var part = Math.min(geometry.partitions.parts.length-1,
-                                      Math.max(0, px + py * ctX + pz * ctX * ctY))
-                  var mind = 6e6, pIdx = -1
-                  
-                  /*
-                  for(var i = 0; i < geometry.partitions.parts.length; i++){
-                    var x2 = geometry.partitions.parts[i].cx
-                    var y2 = geometry.partitions.parts[i].cy
-                    var z2 = geometry.partitions.parts[i].cz
-                    if((d=Math.hypot(px-x2, py-y2, pz-z2)) < mind){
-                      mind = d
-                      pIdx = i
+                  var ls = geometry.partitionRadius
+                  var a = []
+                  geometry.partitions.forEach((part, pIdx) => {
+                    var x2 = part.cx
+                    var y2 = part.cy
+                    var z2 = part.cz
+                    if(Math.hypot(x2-px, y2-py, z2-pz) < geometry.partitionRadius){
+                      for(var i = 0; i < part.vertices.length; i++){
+                        a.push(part.vertices)
+                      }
                     }
-                  }
-                  */
-                  console.log(part, px, py, pz, ctX, ctY, ctZ, geometry.partitions.parts.length)
-                  tvertices = new Float32Array(geometry.partitions.parts[part].vertices)
+                  })
+                  
+                  tvertices = new Float32Array(a)
                 }else{
                   tvertices = geometry.vertices
                 }
