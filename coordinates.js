@@ -1058,7 +1058,7 @@ const Renderer = async options => {
               
               //normals (for flat shading)
               
-              if(geometry.flatShadingNormalVecs.length){
+              if(0 && geometry.flatShadingNormalVecs.length){
                 //console.log('t-flatShadingNormalVecs: ', tfsnvi, tflatShadingNormalVecs)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
@@ -1097,9 +1097,10 @@ const Renderer = async options => {
                 ctx.enableVertexAttribArray(dset.locOffset)
                 */
                 
-                console.log(tvertices, toffsets, tuvs, tnormalVecs,
+                /*console.log(tvertices, toffsets, tuvs, tnormalVecs,
                             tflatShadingNormalVecs, tnormals)
                 console.log(tgoi, tgvi, tgui, tgnvi, tfsnvi, tgni)
+                */
 
               if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
