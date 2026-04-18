@@ -973,9 +973,9 @@ const Renderer = async options => {
                   var cz = part.cz
                   if(Math.hypot(cx-px, cy-py, cz-pz) < ls){
                     verts.push(...part.vertices)
-                    uvs.push(...part.vertices)
-                    normalVecs.push(...part.vertices)
-                    if(geometry.showNormals) normals.push(...part.vertices)
+                    uvs.push(...part.uvs)
+                    normalVecs.push(...part.normalVecs)
+                    if(geometry.showNormals) normals.push(...part.normals)
                   }
                 })
                 tvertices = new Float32Array(verts)
