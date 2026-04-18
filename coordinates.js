@@ -1030,7 +1030,7 @@ const Renderer = async options => {
                       }
                     }
                   })
-                  
+                  console.log(a)
                   tvertices = new Float32Array(a)
                 }else{
                   tvertices = geometry.vertices
