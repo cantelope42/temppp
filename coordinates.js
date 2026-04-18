@@ -937,7 +937,7 @@ const Renderer = async options => {
               var tuvs
               var tnormalVecs
               var tflatShadingNormalVecs
-              var tOffsets
+              var toffsets
               if(geometry.isPartitioned){
                 var px, py, pz
                 if(renderer.cameraMode == 'fps'){
@@ -994,7 +994,7 @@ const Renderer = async options => {
                 tvertices = new Float32Array(verts)
                 tuvs = new Float32Array(uvs)
                 tnormalVecs= new Float32Array(normalVecs)
-                tOffsets = new Float32Array(offsets)
+                toffsets = new Float32Array(offsets)
                 tflatShadingNormalVecs = new Float32Array(flatShadingNormalVecs)
                 if(geometry.showNormals)
                   tnormals = new Float32Array(normals)
