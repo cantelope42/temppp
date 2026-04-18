@@ -972,10 +972,15 @@ const Renderer = async options => {
                   var cy = part.cy
                   var cz = part.cz
                   if(Math.hypot(cx-px, cy-py, cz-pz) < ls){
-                    verts.push(...part.vertices)
-                    uvs.push(...part.uvs)
-                    normalVecs.push(...part.normalVecs)
-                    if(geometry.showNormals) normals.push(...part.normals)
+                    for(var i = 0; i < part.vertices.length; i++)
+                      normalVecs.push(part.normalVecs[i])
+                    for(var i = 0; i < part.uvs.length; i++)
+                      uvs.push(part.uvs[i])
+                    for(var i = 0; i < part.normalVecs.length; i++)
+                      normalVecs.push(part.normalVecs[i])
+                    if(geometry.showNormals)
+                      for(var i = 0; i < part.normas.length; i++)
+                        normals.push(part.normals[i])
                   }
                 })
                 tvertices = new Float32Array(verts)
