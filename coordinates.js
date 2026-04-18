@@ -998,11 +998,15 @@ const Renderer = async options => {
                     pz = -renderer.z
                   }else{
                     var d = Math.hypot(renderer.x, renderer.y, renderer.z)
-                    var p1 = -renderer.yaw
-                    var p2 = -renderer.pitch + Math.PI/2
-                    px = S(p1) * S(p2) * d
-                    py = C(p2) * d
-                    pz = C(p1) * S(p2) * d
+                    px = 0
+                    py = 0
+                    pz = -d
+                    p = Math.atan2(y, z) + renderer.pitch
+                    py = S(p)
+                    pz = C(p)
+                    p = Math.atan2(x, z) + renderer.yaw
+                    px = S(p)
+                    pz = C(p)
                   }
                   
                   var ctX = geometry.partitions.ctX
