@@ -1080,7 +1080,6 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
-                console.log(tvertices)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tvertices, ctx.STATIC_DRAW)
                 dset.locPosition = ctx.getAttribLocation(dset.program, "position")
                 ctx.vertexAttribPointer(dset.locPosition, 3, ctx.FLOAT, false, 0, 0)
@@ -1097,6 +1096,20 @@ const Renderer = async options => {
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
                 */
+                
+                console.log(tvertices, toffsets, tuvs, tnormalVecs,
+                            tflatShadingNormalVecs, tnormals)
+
+              var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
+              var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
+              var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
+              var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
+              var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
+              var tgni = []
+              if(geometry.showNormals)
+                tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
+              
+                console.log(tgoi, tgvi, tgui, tgnvi, tgni)
                 
                 ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
                                     ctx.TRIANGLES,
