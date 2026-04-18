@@ -1009,11 +1009,11 @@ const Renderer = async options => {
               }
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
               var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
-              var tgui = Array(tuvs.length/3|0).fill().map((v, i) => i)
+              var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
               var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
               var tgni = []
-              //if(geometry.showNormals)
+              if(geometry.showNormals)
                 tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
               // dynamically resize UVs, if needed
@@ -1062,8 +1062,8 @@ const Renderer = async options => {
                 ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tfsnvi, ctx.STATIC_DRAW)
-                ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
-                ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
+                //ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
+                //ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
                 dset.locFlatShadingNormalVec= ctx.getAttribLocation(dset.program, "flatShadingNormalVec")
                 ctx.vertexAttribPointer(dset.locFlatShadingNormalVec, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locFlatShadingNormalVec)
@@ -1092,14 +1092,6 @@ const Renderer = async options => {
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
-                
-                console.log(tvertices, toffsets, tuvs, tnormalVecs,
-                            tflatShadingNormalVecs, tnormals)
-                console.log(tgoi, tgvi, tgui, tgnvi, tfsnvi, tgni)
-
-              if(geometry.showNormals)
-                tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
-              
                 
                 ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
                                     ctx.TRIANGLES,
