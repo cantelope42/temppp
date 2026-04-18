@@ -936,6 +936,8 @@ const Renderer = async options => {
               var tnormals
               var tuvs
               var tnormalVecs
+              var tflatShadingNormalVecs
+              var tOffsets
               if(geometry.isPartitioned){
                 var px, py, pz
                 if(renderer.cameraMode == 'fps'){
@@ -967,6 +969,8 @@ const Renderer = async options => {
                 var uvs = []
                 var normalVecs = []
                 var normals = []
+                var offsets = []
+                var flatShadingNormalVecs = []
                 geometry.partitions.parts.forEach((part, pIdx) => {
                   var cx = part.cx
                   var cy = part.cy
@@ -974,10 +978,14 @@ const Renderer = async options => {
                   if(Math.hypot(cx-px, cy-py, cz-pz) < ls){
                     for(var i = 0; i < part.vertices.length; i++)
                       verts.push(part.vertices[i])
+                    for(var i = 0; i < part.offsets.length; i++)
+                      offsets.push(part.offsets[i])
                     for(var i = 0; i < part.uvs.length; i++)
                       uvs.push(part.uvs[i])
                     for(var i = 0; i < part.normalVecs.length; i++)
                       normalVecs.push(part.normalVecs[i])
+                    for(var i = 0; i < part.flatShadingNormalVecs.length; i++)
+                      flatShadingNormalVecs.push(part.normalVecs[i])
                     if(geometry.showNormals)
                       for(var i = 0; i < part.normals.length; i++)
                         normals.push(part.normals[i])
@@ -986,20 +994,27 @@ const Renderer = async options => {
                 tvertices = new Float32Array(verts)
                 tuvs = new Float32Array(uvs)
                 tnormalVecs= new Float32Array(normalVecs)
+                tOffsets = new Float32Array(offsets)
+                tflatShadingNormalVecs = Float32Array(flatShadingNormalVec)
                 if(geometry.showNormals)
                   tnormals = new Float32Array(normals)
               }else{
                 tvertices = geometry.vertices
+                toffsets = geometry.offsets
                 tuvs= geometry.uvs
+                tflatShadingNormalVecs  = geometry.flatShadingNormalVec
                 tnormalVecs = geometry.normalVecs
                 if(geometry.showNormals)
                   tnormals = geometry.normals
               }
+              var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
               var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
               var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
               var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
+              var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
+              var tgni
               if(geometry.showNormals)
-                var tgni = Array(tnormals.length/6|0).fill().map((v, i) => i)
+                tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
               
                 
               // dynamically resize UVs, if needed
@@ -1044,9 +1059,9 @@ const Renderer = async options => {
               
               if(geometry.flatShadingNormalVecs.length){
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
-                ctx.bufferData(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVecs, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ARRAY_BUFFER, tflatShadingNormalVecs, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
-                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, geometry.fsnVecIndices, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tfsnvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.flatShadingNormalVec_buffer)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.FlatShadingNormalVec_Index_Buffer)
                 dset.locFlatShadingNormalVec= ctx.getAttribLocation(dset.program, "flatShadingNormalVec")
@@ -1070,9 +1085,9 @@ const Renderer = async options => {
 
                 // offsets
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.offset_buffer)
-                ctx.bufferData(ctx.ARRAY_BUFFER, geometry.offsets, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ARRAY_BUFFER, toffsets, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Offset_Index_Buffer)
-                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, geometry.oIndices, ctx.STATIC_DRAW)
+                ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgoi, ctx.STATIC_DRAW)
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
                 ctx.enableVertexAttribArray(dset.locOffset)
@@ -3393,10 +3408,7 @@ const InitPartitioning = geometry => {
         uvs: [],
         normals: [],
         normalVecs: [],
-        vIndices: [],
-        uIndices: [],
-        nIndices: [],
-        nvIndices: [],
+        offsets: [],
       }
     })
   }
@@ -3425,7 +3437,9 @@ const InitPartitioning = geometry => {
     g.partitions.parts[part].cz = az
     for(var m = 0; m<9; m++){
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
+      g.partitions.parts[part].flatShadingNormalVecs.push(g.flatShadingNormalVecs[i+m])
       g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
+      g.partitions.parts[part].offsets.push(g.offsets[i+m])
       g.partitions.parts[part].normals.push(g.normals[(i+m)*2])
       g.partitions.parts[part].normals.push(g.normals[(i+m)*2+9])
     }
