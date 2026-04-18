@@ -3354,6 +3354,9 @@ const InitPartitioning = geometry => {
   var ctZ = ((maxZ-minZ) / g.partitionSize | 0) + 1
   g.partitions = {
     ctX, ctY, ctZ,
+    minX, maxX,
+    minY, maxY,
+    minZ, maxZ,
     parts: Array(ctX*ctY*ctZ).fill().map((v, i) => {
       x = minX + (maxX-minX) / ctX * ((i%ctX)+.5)
       y = minY + (maxY-minY) / ctY * ((i%ctY)+.5)
