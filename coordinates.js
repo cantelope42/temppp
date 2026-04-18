@@ -1019,9 +1019,9 @@ const Renderer = async options => {
                   var ls = geometry.partitionRadius
                   var a = []
                   geometry.partitions.parts.forEach((part, pIdx) => {
-                    var x2 = Math.round((px - part.cx)/geometry.partitionSize - .5)
-                    var y2 = Math.round((py - part.cy)/geometry.partitionSize - .5)
-                    var z2 = Math.round((pz - part.cz)/geometry.partitionSize - .5)
+                    var x2 = Math.round((px - part.cx) - .5)
+                    var y2 = Math.round((py - part.cy) - .5)
+                    var z2 = Math.round((pz - part.cz) - .5)
                     if(Math.hypot(x2, y2, z2) < ls){
                       for(var i = 0; i < part.vertices.length; i++){
                         a.push(part.vertices[i])
