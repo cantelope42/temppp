@@ -995,7 +995,7 @@ const Renderer = async options => {
                 tuvs = new Float32Array(uvs)
                 tnormalVecs= new Float32Array(normalVecs)
                 tOffsets = new Float32Array(offsets)
-                tflatShadingNormalVecs = Float32Array(flatShadingNormalVecs)
+                tflatShadingNormalVecs = new Float32Array(flatShadingNormalVecs)
                 if(geometry.showNormals)
                   tnormals = new Float32Array(normals)
               }else{
