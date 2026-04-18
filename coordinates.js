@@ -1095,7 +1095,7 @@ const Renderer = async options => {
                 
                 ctx.drawElements(geometry.wireframe ? ctx.LINE_STRIP :
                                     ctx.TRIANGLES,
-                                  geometry.vertices.length/3|0,
+                                  tvertices.length/3|0,
                                   ctx.UNSIGNED_INT,0)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
@@ -1105,7 +1105,7 @@ const Renderer = async options => {
               // normals lines drawn, optionally
               ctx.uniform1f(dset.locRenderNormals, geometry.showNormals ? 1 : 0)
               if(geometry.showNormals && geometry?.normals?.length){
-                ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.normal_buffer)
+                //ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.normal_buffer)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Normal_Index_Buffer)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgni, ctx.STATIC_DRAW)
                 dset.locNormal = ctx.getAttribLocation(dset.program, "normal")
@@ -1113,7 +1113,7 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.normal_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, tnormals, ctx.STATIC_DRAW)
                 ctx.enableVertexAttribArray(dset.locNormal)
-                ctx.drawElements(ctx.LINES, geometry.normals.length/3|0, ctx.UNSIGNED_INT,0)
+                ctx.drawElements(ctx.LINES, tnormals.length/3|0, ctx.UNSIGNED_INT,0)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
               }
