@@ -1022,10 +1022,11 @@ const Renderer = async options => {
                     var x2 = part.cx
                     var y2 = part.cy
                     var z2 = part.cz
-                    if(Math.hypot((x2-px)/ls2, (y2-py)/ls2, (z2-pz)/ls2) < ls){
-                      for(var i = 0; i < part.vertices.length; i++){
-                        a.push(part.vertices[i])
-                      }
+                    if(Math.hypot((x2-px), (y2-py), (z2-pz)/) < ls/ ls2){
+                      a.push(...part.vertices)
+                      //for(var i = 0; i < part.vertices.length; i++){
+                      //  a.push(part.vertices[i])
+                      //}
                     }
                   })
                   tvertices = new Float32Array(a)
