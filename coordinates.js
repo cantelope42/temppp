@@ -1022,10 +1022,7 @@ const Renderer = async options => {
                   var minY = geometry.partitions.minY
                   var minZ = geometry.partitions.minZ
                   geometry.partitions.parts.forEach((part, pIdx) => {
-                    var x2 = part.cx * ls2
-                    var y2 = part.cy * ls2
-                    var z2 = part.cz * ls2
-                    if(Math.hypot((x2-px-minX), (y2-py-minY), (z2-pz-minZ)) < ls){
+                    if(Math.hypot(ctX-px, ctY-py, ctZ-pz) < ls){
                       a.push(...part.vertices)
                       //for(var i = 0; i < part.vertices.length; i++){
                       //  a.push(part.vertices[i])
@@ -3398,9 +3395,9 @@ const InitPartitioning = geometry => {
     var pz = ((az - minZ) / g.partitionSize | 0)
     var part = px + py * ctX + pz * ctX * ctY
     //console.log(px, py, pz, ctX, ctY, ctZ, part, g.partitions.parts.length, ay, minY, maxY)
-    g.partitions.parts[part].cx = px
-    g.partitions.parts[part].cy = py
-    g.partitions.parts[part].cz = pz
+    //g.partitions.parts[part].cx = px
+    //g.partitions.parts[part].cy = py
+    //g.partitions.parts[part].cz = pz
     for(var m = 0; m<9; m++){
       g.partitions.parts[part].vertices.push(g.vertices[i+m])
       g.partitions.parts[part].normalVecs.push(g.normalVecs[i+m])
