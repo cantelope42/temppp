@@ -971,6 +971,12 @@ const Renderer = async options => {
                 var normals = []
                 var offsets = []
                 var flatShadingNormalVecs = []
+                var tgvi
+                var tgoi
+                var tgui
+                var tgnvi
+                var tfsnvi
+                var tgni
                 geometry.partitions.parts.forEach((part, pIdx) => {
                   var cx = part.cx
                   var cy = part.cy
@@ -998,6 +1004,14 @@ const Renderer = async options => {
                 tflatShadingNormalVecs = new Float32Array(flatShadingNormalVecs)
                 if(geometry.showNormals)
                   tnormals = new Float32Array(normals)
+                var tgvi = new Uint32Array( Array(tvertices.length/3|0).fill().map((v,i)=>i) )
+                var tgoi = new Uint32Array( Array(toffsets.length/3|0).fill().map((v,i)=>i) )
+                var tgui = new Uint32Array( Array(tuvs.length/2|0).fill().map((v,i)=>i) )
+                var tgnvi = new Uint32Array( Array(tnormalVecs.length/3|0).fill().map((v,i)=>i) )
+                var tfsnvi = new Uint32Array( Array(tflatShadingNormalVecs.length/3|0).fill().map((v,i)=>i) )
+                
+                if(geometry.showNormals)
+                  var tgni = new Uint32Array( Array(tnormals.length/3|0).fill().map((v,i)=>i) )
               }else{
                 tvertices = geometry.vertices
                 toffsets = geometry.offsets
@@ -1006,18 +1020,13 @@ const Renderer = async options => {
                 tflatShadingNormalVecs = geometry.flatShadingNormalVecs
                 if(geometry.showNormals)
                   tnormals = geometry.normals
+                tgvi = geometry.vIndices
+                tgni = geometry.nIndices
+                tgnvi = geometry.nVecIndices
+                tfsnvi = geometry.fsnVecIndices
+                tgui = geometry.uvIndices
+                tgoi = geometry.oIndices
               }
-              
-              var tgvi = new Uint32Array( Array(tvertices.length/3|0).fill().map((v,i)=>i) )
-              var tgoi = new Uint32Array( Array(toffsets.length/3|0).fill().map((v,i)=>i) )
-              var tgui = new Uint32Array( Array(tuvs.length/2|0).fill().map((v,i)=>i) )
-              var tgnvi = new Uint32Array( Array(tnormalVecs.length/3|0).fill().map((v,i)=>i) )
-              var tfsnvi = new Uint32Array( Array(tflatShadingNormalVecs.length/3|0).fill().map((v,i)=>i) )
-              
-              var tgni
-              if(geometry.showNormals)
-                var tgni = new Uint32Array( Array(tnormals.length/3|0).fill().map((v,i)=>i) )
-
               
               // dynamically resize UVs, if needed
               
@@ -1089,7 +1098,6 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.offset_buffer)
                 ctx.bufferData(ctx.ARRAY_BUFFER, toffsets, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Offset_Index_Buffer)
-                //console.log('t-offsets: ', tgoi, toffsets)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgoi, ctx.STATIC_DRAW)
                 dset.locOffset = ctx.getAttribLocation(dset.program, "offset")
                 ctx.vertexAttribPointer(dset.locOffset, 3, ctx.FLOAT, false, 0, 0)
