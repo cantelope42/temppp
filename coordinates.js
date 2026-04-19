@@ -1369,7 +1369,7 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
     if(url.toLowerCase().substr(url.length-4) == '.zip'){
       await fetch(url).then(res=>res.blob()).then(data => {
         ;(new zip.ZipReader(new zip.BlobReader(data))).getEntries()
-        .then(res => {
+        .then(async res => {
           var file = res[0]
           (await file.getData(await (new zip.BlobWriter()))).text().then(data=>{
             var ct = 0
