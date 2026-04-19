@@ -1369,8 +1369,8 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
     if(url.toLowerCase().substr(url.length-4) == '.zip'){
       await fetch(url).then(res=>res.blob()).then(data => {
         ;(new zip.ZipReader(new zip.BlobReader(data))).getEntries()
-        .then(res => {
-          ;((res[0]).getData(await (new zip.BlobWriter()))).text().then(data=>{
+        .then(async res => {
+          ;(await (res[0]).getData(await (new zip.BlobWriter()))).text().then(data=>{
             var ct = 0
             do{ ct++ }while(data.substr(0,2)=='PK');
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
