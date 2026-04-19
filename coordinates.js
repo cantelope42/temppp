@@ -964,7 +964,6 @@ const Renderer = async options => {
                 var ctZ = geometry.partitions.ctZ
                 
                 var ls = geometry.partitionRadius
-                var ls2 = geometry.partitionSize
                 var verts = []
                 var uvs = []
                 var normalVecs = []
@@ -1367,10 +1366,24 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
     var nInd = []
     var uInd = []
     var fInd = []
-    await fetch(url).then(res=>res.text()).then(data => {
-      ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
-    })
-    cache.objFiles = [...structuredClone(cache.objFiles), {url, ret}]
+    if(url.toLowerCase().substr(url.length-4) == '.zip'){
+      await fetch(url).then(res=>res.blob()).then(data => {
+        ;(new zip.ZipReader(new zip.BlobReader(data))).getEntries()
+        .then(res => {
+          var file = res[0]
+          (await file.getData(await (new zip.BlobWriter()))).text().then(data=>{
+            var ct = 0
+            do{ ct++ }while(data.substr(0,2)=='PK');
+            ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
+          })
+        })
+      })
+    }else{
+      await fetch(url).then(res=>res.text()).then(data => {
+        ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
+      })
+      cache.objFiles = [...structuredClone(cache.objFiles), {url, ret}]
+    }
   }
   OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
   return ret
