@@ -1075,7 +1075,7 @@ const Renderer = async options => {
 
               // vertices
               
-              if(geometry?.vertices?.length){
+              if(geometry?.vertices?.length && tvertices.size){
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, geometry.Vertex_Index_Buffer)
                 ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, tgvi, ctx.STATIC_DRAW)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.vertex_buffer)
