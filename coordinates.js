@@ -1007,17 +1007,19 @@ const Renderer = async options => {
                 if(geometry.showNormals)
                   tnormals = geometry.normals
               }
-              var tgvi = Array(tvertices.length/3|0).fill().map((v, i) => i)
-              var tgoi = Array(toffsets.length/3|0).fill().map((v, i) => i)
-              var tgui = Array(tuvs.length/2|0).fill().map((v, i) => i)
-              var tgnvi = Array(tnormalVecs.length/3|0).fill().map((v, i) => i)
-              var tfsnvi = Array(tflatShadingNormalVecs.length/3|0).fill().map((v, i) => i)
-              var tgni = []
+              
+              var tgvi = new Uint32Array( Array(tvertices.length/3|0).fill().map((v,i)=>i) )
+              var tgoi = new Uint32Array( Array(toffsets.length/3|0).fill().map((v,i)=>i) )
+              var tgui = new Uint32Array( Array(tuvs.length/2|0).fill().map((v,i)=>i) )
+              var tgnvi = new Uint32Array( Array(tnormalVecs.length/3|0).fill().map((v,i)=>i) )
+              var tfsnvi = new Uint32Array( Array(tflatShadingNormalVecs.length/3|0).fill().map((v,i)=>i) )
+              
+              var tgni
               if(geometry.showNormals)
-                tgni = Array(tnormals.length/3|0).fill().map((v, i) => i)
+                var tgni = new Uint32Array( Array(tnormals.length/3|0).fill().map((v,i)=>i) )
+
               
               // dynamically resize UVs, if needed
-              console.log(tvertices.length, tgvi)
               
               if(geometry.oScaleUVX != geometry.scaleUVX ||
                  geometry.oScaleUVY != geometry.scaleUVY){
@@ -1029,7 +1031,6 @@ const Renderer = async options => {
                 }
               }
 
-/*
               // bind buffers
               ctx.bindBuffer(ctx.ARRAY_BUFFER, geometry.uv_buffer)
               ctx.bufferData(ctx.ARRAY_BUFFER, tuvs, ctx.STATIC_DRAW)
@@ -1072,7 +1073,6 @@ const Renderer = async options => {
                 ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, null)
                 ctx.bindBuffer(ctx.ARRAY_BUFFER, null)
               }
-              */
 
               // vertices
               
