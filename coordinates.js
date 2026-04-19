@@ -1374,14 +1374,19 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
             var ct = 0
             do{ ct++ }while(data.substr(0,2)=='PK');
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
+            OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
           })
+          return ret
         })
+        return ret
       })
     }else{
       await fetch(url).then(res=>res.text()).then(data => {
         ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
       })
       cache.objFiles = [...structuredClone(cache.objFiles), {url, ret}]
+      OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
+      return ret
     }
   }
   OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
