@@ -1376,10 +1376,11 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
             console.log(1)
           })
+        }).then(next => {
+          console.log('next', next)
+          console.log(2)
+          OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
         })
-      }).then(next => {
-        console.log(2)
-        OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
       })
       return ret
     }else{
