@@ -1368,7 +1368,7 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
     var fInd = []
     if(url.toLowerCase().substr(url.length-4) == '.zip'){
       await fetch(url).then(res=>res.blob()).then(data => {
-        ;(new zip.ZipReader(new zip.BlobReader(data))).getEntries()
+        ;await (new zip.ZipReader(new zip.BlobReader(data))).getEntries()
         .then(async res => {
           ;(await (res[0]).getData(await (new zip.BlobWriter()))).text().then(data=>{
             var ct = 0
@@ -1377,15 +1377,17 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
           })
         })
       })
+      OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
+      return ret
     }else{
       await fetch(url).then(res=>res.text()).then(data => {
         ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
       })
+      cache.objFiles = [...structuredClone(cache.objFiles), {url, ret}]
+      OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
+      return ret
     }
-    cache.objFiles = [...structuredClone(cache.objFiles), {url, ret}]
   }
-  OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
-  return ret
 }
 
 const Q = (X, Y, Z, c, AR=700) => [c.width/2+X/Z*AR, c.height/2+Y/Z*AR]
