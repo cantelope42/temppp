@@ -1374,9 +1374,11 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
             var ct = 0
             do{ ct++ }while(data.substr(0,2)=='PK');
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
+            console.log(1)
           })
         })
       })
+      console.log(2)
       OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
       return ret
     }else{
