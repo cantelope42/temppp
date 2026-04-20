@@ -1382,7 +1382,10 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
           })
         })
         var ct=0
-        do{ ct++ }while(!brk); //&& ct<1e6);
+        do{
+          ct++
+          await new Promise(r => setTimeout(r, 200));
+        }while(!brk); //&& ct<1e6);
         console.log(2)
         OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
       })
