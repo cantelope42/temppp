@@ -2400,7 +2400,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
           cols = 64
           var tempURL = `${ModuleBase}/resources/objs/sphere_0.obj`
           shape = await LoadOBJ(tempURL, size, 0,0,0,0,0,0, false, true)
-          console.log('shape -> ', shape.vertices)
           vertices = shape.vertices
           normals  = shape.normals
           uvs      = shape.uvs
@@ -2549,6 +2548,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
           resolved    = true
         }else{
           shape = await LoadOBJ(url, size, 0,0,0,0,0,0, false, true)
+          console.log('shape -> ', shape.vertices)
           vertices = shape.vertices
           normals  = shape.normals
           uvs      = shape.uvs
