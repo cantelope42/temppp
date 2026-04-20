@@ -1377,9 +1377,10 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
             console.log(1)
           })
         })
-      })
-      console.log(2)
-      OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
+      }).then(next => {
+        console.log(2)
+        OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
+      }
       return ret
     }else{
       await fetch(url).then(res=>res.text()).then(data => {
