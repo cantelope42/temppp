@@ -1361,26 +1361,25 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
   var a, X, Y, Z
   if(involveCache && (cacheItem = cache.objFiles.filter(v=>v.url == url)).length){
     ret = cacheItem[0].ret
+    return ret
   }else{
     var vInd = []
     var nInd = []
     var uInd = []
     var fInd = []
     if(url.toLowerCase().substr(url.length-4) == '.zip'){
-      await fetch(url).then(res=>res.blob()).then(async data => {
-        ;await (new zip.ZipReader(await new zip.BlobReader(data))).getEntries()
-        .then(async res => {
-          ;(await (res[0]).getData(await (new zip.BlobWriter()))).text().then(data=>{
+      await fetch(url).then(res=>res.blob()).then( data => {
+        ; (new zip.ZipReader( new zip.BlobReader(data))).getEntries()
+        .then( res => {
+          ;( (res[0]).getData( (new zip.BlobWriter()))).text().then(data=>{
             var ct = 0
             do{ ct++ }while(data.substr(0,2)=='PK');
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
             console.log(1)
           })
-        }).then(next => {
-          console.log('next', next)
-          console.log(2)
-          OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
         })
+        console.log(2)
+        OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
       })
       return ret
     }else{
