@@ -2324,6 +2324,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
             //cache.customShapes.push({data: structuredClone(geometryData), url})
           }else{
             if(fileURL.toLowerCase().substr(fileURL.length-4) == '.zip'){
+              console.log('zip file detected')
               var brk = 'PK'
               await fetch(fileURL).then(res=>res.blob()).then(async data => {
                 ;await (new zip.ZipReader(await new zip.BlobReader(data))).getEntries()
@@ -2333,6 +2334,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
                     var ct = 0
                     brk = data.substr(0,2)
                     do{ ct++ }while(brk=='PK');
+                    console.log(1)
                     if(data?.normalAssocs) normalAssocs = data.normalAssocs
                     if(data?.flatShadingNormalVecs) flatShadingNormalVecs = data.flatShadingNormalVecs
                     vertices     = data.vertices
@@ -2353,6 +2355,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
                 })
                 var ct=0
                 do{ ct++ }while(brk=='PK');
+                console.log(2)
               })
             }else{
               await fetch(fileURL).then(res=>res.json()).then(data=>{
