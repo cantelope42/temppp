@@ -1367,15 +1367,16 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
     var nInd = []
     var uInd = []
     var fInd = [] 
-    var brk = false
     if(url.toLowerCase().substr(url.length-4) == '.zip'){
+      var brk = 'PK'
       await fetch(url).then(res=>res.blob()).then(async data => {
         ;await (new zip.ZipReader(await new zip.BlobReader(data))).getEntries()
         .then( async res => {
           var el = await res[0].getData(new zip.BlobWriter())
           await el.text().then(data=>{
             var ct = 0
-            do{ ct++ }while(data.substr(0,2)=='PK');
+            brk = data.substr(0,2)
+            do{ ct++ }while(brk=='PK');
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
             brk = true
             console.log(1)
@@ -1384,8 +1385,8 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
         var ct=0
         do{
           ct++
-          await new Promise(r => setTimeout(r, 200));
-        }while(!brk); //&& ct<1e6);
+          //await new Promise(r => setTimeout(r, 200));
+        }while(brk=='PK');
         console.log(2)
         OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
       })
