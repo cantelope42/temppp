@@ -2335,6 +2335,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
                     brk = data.substr(0,2)
                     do{ ct++ }while(brk=='PK');
                     console.log(1)
+                    console.log(data)
                     if(data?.normalAssocs) normalAssocs = data.normalAssocs
                     if(data?.flatShadingNormalVecs) flatShadingNormalVecs = data.flatShadingNormalVecs
                     vertices     = data.vertices
