@@ -2334,8 +2334,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
                     var ct = 0
                     brk = data.substr(0,2)
                     do{ ct++ }while(brk=='PK');
-                    console.log(1)
-                    console.log(data)
+                    data = JSON.parse(data)
                     if(data?.normalAssocs) normalAssocs = data.normalAssocs
                     if(data?.flatShadingNormalVecs) flatShadingNormalVecs = data.flatShadingNormalVecs
                     vertices     = data.vertices
@@ -2356,7 +2355,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
                 })
                 var ct=0
                 do{ ct++ }while(brk=='PK');
-                console.log(2)
               })
             }else{
               await fetch(fileURL).then(res=>res.json()).then(data=>{
