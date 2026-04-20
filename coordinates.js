@@ -2325,7 +2325,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
           }else{
             if(fileURL.toLowerCase().substr(fileURL.length-4) == '.zip'){
               var brk = 'PK'
-              await fetch(url).then(res=>res.blob()).then(async data => {
+              await fetch(fileURL).then(res=>res.blob()).then(async data => {
                 ;await (new zip.ZipReader(await new zip.BlobReader(data))).getEntries()
                 .then( async res => {
                   var el = await res[0].getData(new zip.BlobWriter())
