@@ -1379,15 +1379,10 @@ const LoadOBJ = async (url, scale, tx, ty, tz, rl, pt, yw, recenter=false, invol
             do{ ct++ }while(brk=='PK');
             ProcessOBJData(data, vInd, nInd, uInd, fInd, ret)
             brk = true
-            console.log(1)
           })
         })
         var ct=0
-        do{
-          ct++
-          //await new Promise(r => setTimeout(r, 200));
-        }while(brk=='PK');
-        console.log(2)
+        do{ ct++ }while(brk=='PK');
         OBJFinishing(ret, tx, ty, tz, rl, pt, yw)
       })
       return ret
@@ -2255,20 +2250,14 @@ const LoadGeometry = async (renderer, geoOptions) => {
                 if(data?.flatShadingNormalVecs) {
                   flatShadingNormalVecs = data.flatShadingNormalVecs.map(v=>-v)
                 }
-                if(data?.stride) geometry.stride = data.stride
-                if(data?.fsnvstate) {
-                  fsnvstate = data.shapeData.map(v=>v)
-                }
+                if(data?.stride) stride = data.stride
+                if(data?.fsnvstate) fsnvstate= data.shapeData.map(v=>v)
                 if(data?.shapeData) {
                   isShapeArray = true
                   shapeData = data.shapeData.map(v=>v)
                 }
-                if(data?.vstate) {
-                  vstate = data.vstate.map(v=>v)
-                }
-                if(data?.nvstate) {
-                  nvstate = data.nvstate.map(v=>v)
-                }
+                if(data?.vstate) vstate = data.vstate.map(v=>v)
+                if(data?.nvstate) nvstate = data.nvstate.map(v=>v)
                 //if(data?.uvstate) {
                 //  uvs = data.uvstate.map(v=>-v)
                 //}else{
@@ -2322,51 +2311,69 @@ const LoadGeometry = async (renderer, geoOptions) => {
             normalVecs  = geometryData.normalVecs
             uvs         = geometryData.uvs
 
-
-            if(geometryData?.stride) stride = geometryData.stride
-            if(geometryData?.fsnvstate) {
-              fsnvstate= geometryData.shapeData.map(v=>v)
-            }
-            if(geometryData?.shapeData) {
+            if(data?.stride) stride = data.stride
+            if(data?.fsnvstate) fsnvstate= data.shapeData.map(v=>v)
+            if(data?.shapeData) {
               isShapeArray = true
-              shapeData = geometryData.shapeData.map(v=>v)
+              shapeData = data.shapeData.map(v=>v)
             }
-            if(geometryData?.vstate) {
-              vstate = geometryData.vstate.map(v=>v)
-            }
-            if(geometryData?.nvstate) {
-              nvstate = geometryData.nvstate.map(v=>v)
-            }
+            if(data?.vstate) vstate = data.vstate.map(v=>v)
+            if(data?.nvstate) nvstate = data.nvstate.map(v=>v)
 
             resolved    = true
             //cache.customShapes.push({data: structuredClone(geometryData), url})
           }else{
-            await fetch(fileURL).then(res=>res.json()).then(data=>{
-              if(data?.normalAssocs) normalAssocs = data.normalAssocs
-              if(data?.flatShadingNormalVecs) flatShadingNormalVecs = data.flatShadingNormalVecs
-              vertices     = data.vertices
-              normals      = data.normals
-              normalVecs   = data.normalVecs
-              uvs          = data.uvs
-
-              if(data?.stride) stride = data.stride
-              if(data?.fsnvstate) {
-                fsnvstate= data.shapeData.map(v=>v)
-              }
-              if(data?.shapeData) {
-                isShapeArray = true
-                shapeData = data.shapeData.map(v=>v)
-              }
-              if(data?.vstate) {
-                vstate = data.vstate.map(v=>v)
-              }
-              if(data?.nvstate) {
-                nvstate = data.nvstate.map(v=>v)
-              }
-
-              resolved     = true
-              cache.customShapes.push({data: structuredClone(data), url})
-            })
+            if(fileURL.toLowerCase().substr(fileURL.length-4) == '.zip'){
+              var brk = 'PK'
+              await fetch(url).then(res=>res.blob()).then(async data => {
+                ;await (new zip.ZipReader(await new zip.BlobReader(data))).getEntries()
+                .then( async res => {
+                  var el = await res[0].getData(new zip.BlobWriter())
+                  await el.text().then(data=>{
+                    var ct = 0
+                    brk = data.substr(0,2)
+                    do{ ct++ }while(brk=='PK');
+                    if(data?.normalAssocs) normalAssocs = data.normalAssocs
+                    if(data?.flatShadingNormalVecs) flatShadingNormalVecs = data.flatShadingNormalVecs
+                    vertices     = data.vertices
+                    normals      = data.normals
+                    normalVecs   = data.normalVecs
+                    uvs          = data.uvs
+                    if(data?.stride) stride = data.stride
+                    if(data?.fsnvstate) fsnvstate= data.shapeData.map(v=>v)
+                    if(data?.shapeData) {
+                      isShapeArray = true
+                      shapeData = data.shapeData.map(v=>v)
+                    }
+                    if(data?.vstate) vstate = data.vstate.map(v=>v)
+                    if(data?.nvstate) nvstate = data.nvstate.map(v=>v)
+                    resolved     = true
+                    cache.customShapes.push({data: structuredClone(data), url})
+                  })
+                })
+                var ct=0
+                do{ ct++ }while(brk=='PK');
+              })
+            }else{
+              await fetch(fileURL).then(res=>res.json()).then(data=>{
+                if(data?.normalAssocs) normalAssocs = data.normalAssocs
+                if(data?.flatShadingNormalVecs) flatShadingNormalVecs = data.flatShadingNormalVecs
+                vertices     = data.vertices
+                normals      = data.normals
+                normalVecs   = data.normalVecs
+                uvs          = data.uvs
+                if(data?.stride) stride = data.stride
+                if(data?.fsnvstate) fsnvstate= data.shapeData.map(v=>v)
+                if(data?.shapeData) {
+                  isShapeArray = true
+                  shapeData = data.shapeData.map(v=>v)
+                }
+                if(data?.vstate) vstate = data.vstate.map(v=>v)
+                if(data?.nvstate) nvstate = data.nvstate.map(v=>v)
+                resolved     = true
+                cache.customShapes.push({data: structuredClone(data), url})
+              })
+            }
           }
         }
       break
