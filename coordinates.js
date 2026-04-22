@@ -283,7 +283,7 @@ const Renderer = async options => {
         
         // depth + alpha bugfix
         if(!sortedPass && (geometry.isSprite ||
-           shapeArrayIsSprite || (geometry.isLight && geometry.showSource))) {
+           geometry.shapeArrayIsSprite || (geometry.isLight && geometry.showSource))) {
           var queueType
           switch(geometry.shapeType){
             case 'sprite'  : case 'point light': queueType = 'alphaQueue'; break
