@@ -8935,7 +8935,7 @@ const ShouldDisableDepth = shape => {
   //return false
   return ((!shape.isParticle) && (!shape.isLine) &&
          (shape.isLight || shape.isSprite ||
-          shapeArrayIsSprite)) || shape.disableDepthTest
+          shape.shapeArrayIsSprite)) || shape.disableDepthTest
 }
 
 const AnimationLoop = (renderer, func) => {
