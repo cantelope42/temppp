@@ -6270,6 +6270,7 @@ const ProcessShapeArray = shape => {
       data[shpIdx].moffsetz = data[shpIdx].offsetz
       SyncShapeData(shpIdx)
     }
+    console.log('pre reach')
     if(data[shpIdx].mx != data[shpIdx].x ||
        data[shpIdx].my != data[shpIdx].y ||
        data[shpIdx].mz != data[shpIdx].z ||
