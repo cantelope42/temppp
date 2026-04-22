@@ -6307,13 +6307,6 @@ const ProcessShapeArray = shape => {
                     (shape.renderer.cameraMode == 'fps' ? 1 : -1)
         yaw   = -shape.renderer.yaw - shape.yaw
         rotationMode = 1
-        shape.renderer.oCamX     = shape.renderer.x
-        shape.renderer.oCamY     = shape.renderer.y
-        shape.renderer.oCamZ     = shape.renderer.z
-        shape.renderer.oCamRoll  = shape.renderer.roll
-        shape.renderer.oCamPitch = shape.renderer.pitch
-        shape.renderer.oCamYaw   = shape.renderer.yaw
-        console.log('reached...')
       }else{
         roll  = data[shpIdx].roll
         pitch = data[shpIdx].pitch
@@ -6459,6 +6452,12 @@ const ProcessShapeArray = shape => {
       SyncShapeData(shpIdx)
     }
   }
+  shape.renderer.oCamX     = shape.renderer.x
+  shape.renderer.oCamY     = shape.renderer.y
+  shape.renderer.oCamZ     = shape.renderer.z
+  shape.renderer.oCamRoll  = shape.renderer.roll
+  shape.renderer.oCamPitch = shape.renderer.pitch
+  shape.renderer.oCamYaw   = shape.renderer.yaw
 }
 
 
