@@ -6335,7 +6335,7 @@ const ProcessShapeArray = shape => {
         pitch = (-shape.renderer.pitch - shape.pitch * C(shape.renderer.yaw)
                 ) * (shape.renderer.cameraMode == 'fps' ? 1 : -1)
         yaw   = -shape.renderer.yaw - shape.yaw
-        roll  = (shape.renderer.roll - shape.roll) -
+        roll  = (shape.renderer.roll - shape.roll) +
                  shape.pitch * S(shape.renderer.yaw)
         rotationMode = 1
       }else{
