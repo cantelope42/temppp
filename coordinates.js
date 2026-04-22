@@ -5431,11 +5431,9 @@ const BasicShader = async (renderer, options=[]) => {
                 if(fog != 0.0){
                   vec4 preFog = vec4(texel.rgb * 3.0, texel.a);
                   fv = min(1.0, depth * fog) * min(alpha * 2.0, 1.0);
-                  //gl_FragColor = merge(vec4(preFog.rgb, (1.0 - fv)), vec4(fogColor.rgb, 0.0));
-                  gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+                  gl_FragColor = merge(vec4(preFog.rgb, (1.0 - fv)), vec4(fogColor.rgb, 0.0));
                 }else{
-                  gl_FragColor = vec4(1.0,0.0,0.0,1.0);
-                  //gl_FragColor = vec4(texel.rgb * 2.0, texel.a * alpha);
+                  gl_FragColor = vec4(texel.rgb * 2.0, texel.a * alpha);
                 }
               }else{
                 
@@ -5452,11 +5450,9 @@ const BasicShader = async (renderer, options=[]) => {
                 if(fog != 0.0){
                   vec4 preFog = vec4(col.rgb * colorMag, 1.0);
                   fv = min(1.0, depth * fog);
-                  //gl_FragColor = merge(vec4(preFog.rgb, 1.0 - fv), vec4(fogColor.rgb, fv));
-                  gl_FragColor = vec4(1.0,0.0,0.0,1.0);                  
+                  gl_FragColor = merge(vec4(preFog.rgb, 1.0 - fv), vec4(fogColor.rgb, fv));
                 }else{
-                  //gl_FragColor = vec4(col.rgb * colorMag, 1.0);
-                  gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+                  gl_FragColor = vec4(col.rgb * colorMag, 1.0);
                 }
               }
             }
