@@ -50,11 +50,11 @@ const Renderer = async options => {
   var context = {
     mode: 'webgl2',
     options: {
-      alpha                   : true,
-      antialias               : false,
-      desynchronized          : true,
-      premultipliedAlpha      : false,
-      preserveDrawingBuffer   : true,
+      //alpha                   : true,
+      //antialias               : false,
+      //desynchronized          : true,
+      //premultipliedAlpha      : false,
+      //preserveDrawingBuffer   : true,
     }
   }
   
@@ -5433,8 +5433,7 @@ const BasicShader = async (renderer, options=[]) => {
                   fv = min(1.0, depth * fog) * min(alpha * 2.0, 1.0);
                   gl_FragColor = merge(vec4(preFog.rgb, (1.0 - fv)), vec4(fogColor.rgb, 0.0));
                 }else{
-                  //gl_FragColor = vec4(texel.rgb * 2.0, texel.a * alpha);
-                  gl_FragColor = vec4(texture2D( baseTexture, coords).rgb/4.0, alpha);
+                  gl_FragColor = vec4(texel.rgb * 2.0, texel.a * alpha);
                 }
               }else{
                 
@@ -6255,7 +6254,7 @@ const ProcessShapeArray = shape => {
   if(shape.isSprite){
     shape.shapeArrayIsSprite = true
     shape.isSprite = false
-    shape.disableDepthTest = true
+    //shape.disableDepthTest = true
   }
   
   const SyncShapeData = shpIdx => {
