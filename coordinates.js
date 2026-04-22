@@ -5434,7 +5434,7 @@ const BasicShader = async (renderer, options=[]) => {
                   gl_FragColor = merge(vec4(preFog.rgb, (1.0 - fv)), vec4(fogColor.rgb, 0.0));
                 }else{
                   //gl_FragColor = vec4(texel.rgb * 2.0, texel.a * alpha);
-                  gl_FragColor = vec4(texture2D( baseTexture, coords).rgb, alpha);
+                  gl_FragColor = vec4(texture2D( baseTexture, coords).rgb/4.0, alpha);
                 }
               }else{
                 
