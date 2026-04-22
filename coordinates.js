@@ -252,7 +252,10 @@ const Renderer = async options => {
       }else{
         //ctx.disable(ctx.CULL_FACE)
         if(geometry.shapeType != 'sprite' ||
-           (geometry.shapeType != 'point light' && geometry.showSource)) ctx.disable(ctx.BLEND)
+           (geometry.shapeType != 'point light' && geometry.showSource)){
+          ctx.disable(ctx.BLEND)
+          console.log('hmmmm')
+        }
       }
 
       var equirectangularPlugin, omitSplitCheck
