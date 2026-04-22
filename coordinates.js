@@ -3258,6 +3258,8 @@ const LoadGeometry = async (renderer, geoOptions) => {
     partitionSize, partitionRadius, oCamX, oCamY, oCamZ,
     oCamRoll, oCamPitch, oCamYaw,
   }
+  
+  
   Object.keys(updateGeometry).forEach((key, idx) => {
     geometry[key] = updateGeometry[key]
   })
@@ -6252,6 +6254,7 @@ const ProcessShapeArray = shape => {
   if(shape.isSprite){
     shape.shapeArrayIsSprite = true
     shape.isSprite = false
+    shape.disableDepthTest = true
   }
   
   const SyncShapeData = shpIdx => {
