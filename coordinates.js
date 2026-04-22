@@ -50,11 +50,11 @@ const Renderer = async options => {
   var context = {
     mode: 'webgl2',
     options: {
-      //alpha                   : true,
-      //antialias               : false,
-      //desynchronized          : true,
-      //premultipliedAlpha      : false,
-      //preserveDrawingBuffer   : true,
+      alpha                   : true,
+      antialias               : false,
+      desynchronized          : true,
+      premultipliedAlpha      : true,
+      preserveDrawingBuffer   : true,
     }
   }
   
