@@ -6334,9 +6334,9 @@ const ProcessShapeArray = shape => {
       if(shape.shapeArrayIsSprite){
         pitch = (-shape.renderer.pitch - shape.pitch * C(shape.renderer.yaw)
                 ) * (shape.renderer.cameraMode == 'fps' ? 1 : -1)
-        yaw   = -shape.renderer.yaw - shape.yaw
-        roll  = (shape.renderer.roll - shape.roll) +
+        yaw   = (-shape.renderer.yaw - shape.yaw)+
                  shape.pitch * S(shape.renderer.yaw)
+        roll  = (shape.renderer.roll - shape.roll) 
         rotationMode = 1
       }else{
         roll  = data[shpIdx].roll
