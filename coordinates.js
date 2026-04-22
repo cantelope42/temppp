@@ -6332,9 +6332,9 @@ const ProcessShapeArray = shape => {
       tz = data[shpIdx].oz
       var roll, pitch, yaw, rotationMode
       if(shape.shapeArrayIsSprite){
-        roll  = shape.renderer.roll - shape.roll
         pitch = -shape.renderer.pitch - shape.pitch
-        yaw   = -shape.renderer.yaw - shape.yaw
+        yaw   = (-shape.renderer.yaw - shape.yaw) * S(shape.renderer.yaw)
+        roll  = (shape.renderer.roll - shape.roll) * C(shape.renderer.yaw)
         rotationMode = 0
       }else{
         roll  = data[shpIdx].roll
