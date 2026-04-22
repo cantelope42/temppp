@@ -6254,6 +6254,7 @@ const ProcessShapeArray = shape => {
   }
   for(var i = 0; i < shape.vertices.length; i += shape.stride){
     var shpIdx = i/shape.stride
+    var forceSync = false
     if(data[shpIdx].moffsetx != data[shpIdx].offsetx ||
        data[shpIdx].moffsety != data[shpIdx].offsety ||
        data[shpIdx].moffsetz != data[shpIdx].offsetz){
@@ -6268,10 +6269,9 @@ const ProcessShapeArray = shape => {
       data[shpIdx].moffsetx = data[shpIdx].offsetx
       data[shpIdx].moffsety = data[shpIdx].offsety
       data[shpIdx].moffsetz = data[shpIdx].offsetz
-      SyncShapeData(shpIdx)
+      forceSync = true
     }
-    console.log('pre reach')
-    if(data[shpIdx].mx != data[shpIdx].x ||
+    if(forceSync || data[shpIdx].mx != data[shpIdx].x ||
        data[shpIdx].my != data[shpIdx].y ||
        data[shpIdx].mz != data[shpIdx].z ||
        data[shpIdx].mroll != data[shpIdx].roll ||
