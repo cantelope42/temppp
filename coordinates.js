@@ -1786,6 +1786,12 @@ const DownloadCustomShape = geo => {
   var normalVecs            = []
   var flatShadingNormalVecs = []
   var uvs                   = []
+  var oCamX                 = ''
+  var oCamY                 = ''
+  var oCamZ                 = ''
+  var oCamRoll              = ''
+  var oCamPitch             = ''
+  var oCamYaw               = ''
   var stride                = ''
   var vstate                = []
   var fsnvstate             = []
@@ -2169,6 +2175,12 @@ const LoadGeometry = async (renderer, geoOptions) => {
   var nvstate               = []
   var fsnvstate             = []
   var stride                = ''
+  var oCamX                 = ''
+  var oCamY                 = ''
+  var oCamZ                 = ''
+  var oCamRoll              = ''
+  var oCamPitch             = ''
+  var oCamYaw               = ''
   var partitions            = []
 
   var fileURL, hint
@@ -3243,7 +3255,8 @@ const LoadGeometry = async (renderer, geoOptions) => {
     FlatShadingNormalVec_Index_Buffer, fsnvstate,
     nstate, vstate, nvstate, shapeData, stride,
     oUvs, oScaleUVX, oScaleUVY, isPartitioned,
-    partitionSize, partitionRadius
+    partitionSize, partitionRadius, oCamX, oCamY, oCamZ,
+    oCamRoll, oCamPitch, oCamYaw,
   }
   Object.keys(updateGeometry).forEach((key, idx) => {
     geometry[key] = updateGeometry[key]
@@ -6268,15 +6281,21 @@ const ProcessShapeArray = shape => {
       data[shpIdx].moffsetx = data[shpIdx].offsetx
       data[shpIdx].moffsety = data[shpIdx].offsety
       data[shpIdx].moffsetz = data[shpIdx].offsetz
-      //SyncShapeData(shpIdx)
+      SyncShapeData(shpIdx)
     }
-    console.log('pre reach')
-    if(data[shpIdx].mx != data[shpIdx].x ||
-       data[shpIdx].my != data[shpIdx].y ||
-       data[shpIdx].mz != data[shpIdx].z ||
-       data[shpIdx].mroll != data[shpIdx].roll ||
-       data[shpIdx].mpitch != data[shpIdx].pitch ||
-       data[shpIdx].myaw != data[shpIdx].yaw){
+    if((shape.shapeArrayIsSprite &&
+       (shape.renderer.x     != shape.renderer.oCamX ||
+        shape.renderer.y     != shape.renderer.oCamY ||
+        shape.renderer.z     != shape.renderer.oCamZ ||
+        shape.renderer.roll  != shape.renderer.oCamRoll ||
+        shape.renderer.pitch != shape.renderer.oCamPitch ||
+        shape.renderer.yaw   != shape.renderer.oCamYaw)) ||
+       data[shpIdx].mx      != data[shpIdx].x ||
+       data[shpIdx].my      != data[shpIdx].y ||
+       data[shpIdx].mz      != data[shpIdx].z ||
+       data[shpIdx].mroll   != data[shpIdx].roll ||
+       data[shpIdx].mpitch  != data[shpIdx].pitch ||
+       data[shpIdx].myaw    != data[shpIdx].yaw){
       tx = data[shpIdx].ox
       ty = data[shpIdx].oy
       tz = data[shpIdx].oz
@@ -6288,6 +6307,12 @@ const ProcessShapeArray = shape => {
                     (shape.renderer.cameraMode == 'fps' ? 1 : -1)
         yaw   = -shape.renderer.yaw - shape.yaw
         rotationMode = 1
+        shape.renderer.oCamX     = shape.renderer.x
+        shape.renderer.oCamY     = shape.renderer.y
+        shape.renderer.oCamZ     = shape.renderer.z
+        shape.renderer.oCamRoll  = shape.renderer.roll
+        shape.renderer.oCamPitch = shape.renderer.pitch
+        shape.renderer.oCamYaw   = shape.renderer.yaw
         console.log('reached...')
       }else{
         roll  = data[shpIdx].roll
