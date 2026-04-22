@@ -242,7 +242,8 @@ const Renderer = async options => {
          geometry.isLine ||
          geometry.isParticle ||
          geometry.isLight ||
-         geometry.isSprite
+         geometry.isSprite ||
+         geometry.shapeArrayIsSprite
          ) {
         ctx.blendFunc(ctx.SRC_ALPHA, ctx.ONE)
         ctx.enable(ctx.BLEND)
@@ -281,7 +282,8 @@ const Renderer = async options => {
       if(typeof geometry?.shader != 'undefined'){
         
         // depth + alpha bugfix
-        if(!sortedPass && (geometry.isSprite || (geometry.isLight && geometry.showSource))) {
+        if(!sortedPass && (geometry.isSprite ||
+           shapeArrayIsSprite || (geometry.isLight && geometry.showSource))) {
           var queueType
           switch(geometry.shapeType){
             case 'sprite'  : case 'point light': queueType = 'alphaQueue'; break
@@ -414,9 +416,10 @@ const Renderer = async options => {
               ctx.uniform1f(dset.locIsLine,          geometry.isLine)
               ctx.uniform1f(dset.locPenumbraPass,    geometry.penumbraPass ? 1 : 0)
               
-              ctx.uniform1f(dset.locT,               renderer.t)
-              ctx.uniform1f(dset.locColorMix,        geometry.colorMix)
-              ctx.uniform1f(dset.locIsSprite,        geometry.isSprite)
+              ctx.uniform1f(dset.locT,        renderer.t)
+              ctx.uniform1f(dset.locColorMix, geometry.colorMix)
+              ctx.uniform1f(dset.locIsSprite, geometry.isSprite ? 1.0 : 0.0)
+              ctx.uniform1f(dset.locShapeArrayIsSprite, geometry.shapeArrayIsSprite ? 1.0 : 0.0)
               ctx.uniform1f(dset.locIsLight,         geometry.isLight)
               
               ctx.uniform1f(dset.locCameraMode,      
@@ -914,7 +917,8 @@ const Renderer = async options => {
               ctx.uniform1f(dset.locIsLine,          geometry.isLine)
               ctx.uniform1f(dset.locPenumbraPass,    0)
               ctx.uniform1f(dset.locColorMix,        geometry.colorMix)
-              ctx.uniform1f(dset.locIsSprite,        geometry.isSprite)
+              ctx.uniform1f(dset.locIsSprite, geometry.isSprite ? 1.0 : 0.0)
+              ctx.uniform1f(dset.locShapeArrayIsSprite, geometry.shapeArrayIsSprite ? 1.0 : 0.0)
               ctx.uniform1f(dset.locIsLight,         geometry.isLight)
               
               ctx.uniform1f(dset.locCameraMode,      
@@ -2113,6 +2117,8 @@ const LoadGeometry = async (renderer, geoOptions) => {
       case 'showbounding'       : showBounding = !!geoOptions[key]; break
       case 'issprite'           :
         isSprite = (!!geoOptions[key]) ? 1.0: 0.0; break
+      case 'shapearrayissprite'           :
+        shapeArrayIsSprite = (!!geoOptions[key]) ? 1.0: 0.0; break
       case 'islight'            :
         isLight = (!!geoOptions[key]) ? 1.0: 0.0; break
       case 'isparticle'         :
@@ -3765,7 +3771,8 @@ const GetShaderCoord = (vx, vy, vz, geometry, renderer,
   
   vy *= -1
   
-  if(!(geometry.isLight || geometry.isSprite)){
+  if(!(geometry.isLight || geometry.isSprite ||
+       geometry.shapeArrayIsSprite)){
     ar = R_ryp(vx, vy, vz, {
       roll:  geometry.roll * (geometry.isParticle || geometry.isLine ? 1: 1) + .0001,
       pitch: geometry.pitch * (geometry.isParticle || geometry.isLine ? 1: 1),
@@ -3776,7 +3783,8 @@ const GetShaderCoord = (vx, vy, vz, geometry, renderer,
     vz = -ar[2]  * (geometry.isParticle || geometry.isLine ? 1: 1)
   }
 
-  if(geometry.isLight || geometry.isSprite){
+  if(geometry.isLight || geometry.isSprite ||
+     geometry.shapeArrayIsSprite){
     ar = R_pyr(vx, vy, vz, {
       roll:  renderer.roll * (renderer.cameraMode.toLowerCase() == 'fps' ? -1 : 1),
       pitch: -renderer.pitch * (renderer.cameraMode.toLowerCase() == 'fps' ? -1 : 1),
@@ -4691,6 +4699,7 @@ const BasicShader = async (renderer, options=[]) => {
                   fragCode:            `
                     if(isLight == 0.0 &&
                        isSprite == 0.0 &&
+                       shapeArrayIsSprite == 0.0 &&
                        isParticle == 0.0 &&
                        isLine == 0.0){
                       //light.rgb *= .5;
@@ -4786,6 +4795,7 @@ const BasicShader = async (renderer, options=[]) => {
       uniform float splitCheckPass;
       uniform float pointSize;
       uniform float isSprite;
+      uniform float shapeArrayIsSprite;
       uniform float isLight;
       uniform float cameraMode;
       uniform float isParticle;
@@ -5040,7 +5050,8 @@ const BasicShader = async (renderer, options=[]) => {
         fsnVec = flatShadingNormalVec;
         
         if(cameraMode == 1.0){  // 'FPS' mode
-          if(isSprite != 0.0 || isLight != 0.0){
+          if(isSprite != 0.0 || shapeArrayIsSprite != 0.0 ||
+             isLight != 0.0){
             geo = Quat(geoPos, vec3(camOri.x, -camOri.y, -camOri.z), 0);
             pos = vec3(cx, cy, cz);
             pos = Quat(pos,  vec3(0.0, camOri.y, 0.0), 0);
@@ -5075,7 +5086,8 @@ const BasicShader = async (renderer, options=[]) => {
           cpz = 0.0;
           fPos = pos;
         }else{
-          if(isSprite != 0.0 || isLight != 0.0){
+          if(isSprite != 0.0 || shapeArrayIsSprite != 0.0 ||
+             isLight != 0.0){
             geo = Quat(geoPos, vec3(camOri.x, camOri.y, -camOri.z), 0);
             pos = vec3(cx, cy, cz);
             nVec = vec3(nVeci.x, nVeci.y, nVeci.z);
@@ -5186,6 +5198,7 @@ const BasicShader = async (renderer, options=[]) => {
       uniform float plugin;
       uniform float flatShading;
       uniform float isSprite;
+      uniform float shapeArrayIsSprite;
       uniform float isLight;
       uniform float isParticle;
       uniform float isLine;
@@ -5430,7 +5443,9 @@ const BasicShader = async (renderer, options=[]) => {
               texel = merge(texel, vec4(texture2D( supplementalTexture, coords).rgb, sMix));
 
               float fv;
-              if(isSprite != 0.0 || isLight != 0.0){
+              if(isSprite != 0.0 ||
+                 shapeArrayIsSprite != 0.0 ||
+                 isLight != 0.0){
                 if(fog != 0.0){
                   vec4 preFog = vec4(texel.rgb * 3.0, texel.a);
                   fv = min(1.0, depth * fog) * min(alpha * 2.0, 1.0);
@@ -5916,6 +5931,9 @@ const BasicShader = async (renderer, options=[]) => {
 
           dset.locIsSprite = gl.getUniformLocation(dset.program, "isSprite")
           gl.uniform1f(dset.locIsSprite, geometry.isSprite ? 1.0 : 0.0)
+
+          dset.locShapeArrayIsSprite = gl.getUniformLocation(dset.program, "shapeArrayIsSprite")
+          gl.uniform1f(dset.locShapeArrayIsSprite, geometry.shapeArrayIsSprite ? 1.0 : 0.0)
 
           dset.locCameraMode = gl.getUniformLocation(dset.program, "cameraMode")
           gl.uniform1f(dset.locCameraMode, renderer.cameraMode.toLowerCase() == 'fps' ? 1.0 : 0.0)
@@ -8916,7 +8934,8 @@ const LoadFPSControls = async (renderer, options) => {
 const ShouldDisableDepth = shape => {
   //return false
   return ((!shape.isParticle) && (!shape.isLine) &&
-         (shape.isLight || shape.isSprite)) || shape.disableDepthTest
+         (shape.isLight || shape.isSprite ||
+          shapeArrayIsSprite)) || shape.disableDepthTest
 }
 
 const AnimationLoop = (renderer, func) => {
