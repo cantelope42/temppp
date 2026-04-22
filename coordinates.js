@@ -6273,6 +6273,9 @@ const ProcessShapeArray = shape => {
   if(shape.isSprite){
     shape.shapeArrayIsSprite = true
     shape.isSprite = false
+  }
+
+  if(shape.shapeArrayIsSprite){
     shape.disableDepthTest = true
   }
   
