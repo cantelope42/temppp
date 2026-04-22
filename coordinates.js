@@ -6273,7 +6273,7 @@ const ProcessShapeArray = shape => {
   if(shape.isSprite){
     shape.shapeArrayIsSprite = true
     shape.isSprite = false
-    //shape.disableDepthTest = true
+    shape.disableDepthTest = true
   }
   
   const SyncShapeData = shpIdx => {
