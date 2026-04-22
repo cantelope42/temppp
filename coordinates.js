@@ -2324,7 +2324,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
             //cache.customShapes.push({data: structuredClone(geometryData), url})
           }else{
             if(fileURL.toLowerCase().substr(fileURL.length-4) == '.zip'){
-              console.log('zip file detected')
               var brk = 'PK'
               await fetch(fileURL).then(res=>res.blob()).then(async data => {
                 ;await (new zip.ZipReader(await new zip.BlobReader(data))).getEntries()
@@ -2571,7 +2570,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
           resolved    = true
         }else{
           shape = await LoadOBJ(url, size, 0,0,0,0,0,0, false, true)
-          console.log('shape -> ', shape.vertices)
           vertices = shape.vertices
           normals  = shape.normals
           uvs      = shape.uvs
@@ -3479,7 +3477,6 @@ const InitPartitioning = geometry => {
     var py = ((ay - minY) / g.partitionSize | 0)
     var pz = ((az - minZ) / g.partitionSize | 0)
     var part = px + py * ctX + pz * ctX * ctY
-    //console.log(px, py, pz, ctX, ctY, ctZ, part, g.partitions.parts.length, ay, minY, maxY)
     g.partitions.parts[part].cx = ax
     g.partitions.parts[part].cy = ay
     g.partitions.parts[part].cz = az
@@ -6290,6 +6287,7 @@ const ProcessShapeArray = shape => {
                     (shape.renderer.cameraMode == 'fps' ? 1 : -1)
         yaw   = -shape.renderer.yaw - shape.yaw
         rotationMode = 1
+        console.log('reached...')
       }else{
         roll  = data[shpIdx].roll
         pitch = data[shpIdx].pitch
