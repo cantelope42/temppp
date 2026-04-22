@@ -6335,7 +6335,7 @@ const ProcessShapeArray = shape => {
         roll  = shape.renderer.roll - shape.roll
         pitch = -shape.renderer.pitch - shape.pitch
         yaw   = -shape.renderer.yaw - shape.yaw
-        rotationMode = 2
+        rotationMode = 0
       }else{
         roll  = data[shpIdx].roll
         pitch = data[shpIdx].pitch
