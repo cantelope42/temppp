@@ -53,7 +53,7 @@ const Renderer = async options => {
       alpha                   : true,
       antialias               : false,
       desynchronized          : true,
-      premultipliedAlpha      : true,
+      premultipliedAlpha      : false,
       preserveDrawingBuffer   : true,
     }
   }
