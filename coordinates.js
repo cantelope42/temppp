@@ -5050,8 +5050,7 @@ const BasicShader = async (renderer, options=[]) => {
         fsnVec = flatShadingNormalVec;
         
         if(cameraMode == 1.0){  // 'FPS' mode
-          if(isSprite != 0.0 || shapeArrayIsSprite != 0.0 ||
-             isLight != 0.0){
+          if(isSprite != 0.0 || isLight != 0.0){
             geo = Quat(geoPos, vec3(camOri.x, -camOri.y, -camOri.z), 0);
             pos = vec3(cx, cy, cz);
             pos = Quat(pos,  vec3(0.0, camOri.y, 0.0), 0);
@@ -5086,8 +5085,7 @@ const BasicShader = async (renderer, options=[]) => {
           cpz = 0.0;
           fPos = pos;
         }else{
-          if(isSprite != 0.0 || shapeArrayIsSprite != 0.0 ||
-             isLight != 0.0){
+          if(isSprite != 0.0 || isLight != 0.0){
             geo = Quat(geoPos, vec3(camOri.x, camOri.y, -camOri.z), 0);
             pos = vec3(cx, cy, cz);
             nVec = vec3(nVeci.x, nVeci.y, nVeci.z);
