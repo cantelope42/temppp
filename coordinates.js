@@ -4638,6 +4638,7 @@ const BasicShader = async (renderer, options=[]) => {
                       float ref2p1Red, ref2p2Red;
                       float ref2p1Green, ref2p2Green;
                       float ref2p1Blue, ref2p2Blue;
+                      
                       ref2val = 1.0 -
                          pow(.5 * (-1.66-nVec.z), 7.0) * 50.0 * angleOfRefraction2;
                       ref2x3 = (ref2x1 / ref2val - ref2x2);
@@ -4685,6 +4686,7 @@ const BasicShader = async (renderer, options=[]) => {
                     float red   = texture2D(refraction2Map, ref2coordsRed).r;
                     float green = texture2D(refraction2Map, ref2coordsGreen).g;
                     float blue  = texture2D(refraction2Map, ref2coordsBlue).b;
+                    vec3 rgb = vec3(red, green, blue);
                     addInColor = merge(addInColor, vec4(rgb * 1.25, refraction2));
                   `,
                 }
