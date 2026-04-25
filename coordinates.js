@@ -4661,8 +4661,8 @@ const BasicShader = async (renderer, options=[]) => {
                     vec2 ref2coords = vec2(ref2p1+.5/M_PI/2.0, ref2p2);
                     vec3 rgb = texture2D(refraction2Map,ref2coords).rgb;
                     rgb = vec3(rgb.r * min(2.0, max(0.0, (1.0 + nVec.z))),
-                               rgb.g * min(2.0, max(0.0, (2.0 + nVec.z*2.0))),
-                               rgb.b * min(2.0, max(0.0, (3.0 + nVec.z*3.0))));
+                               rgb.g * min(2.0, max(0.0, (2.0 + nVec.z*4.0))),
+                               rgb.b * min(2.0, max(0.0, (3.0 + nVec.z*6.0))));
                     addInColor = merge(addInColor, vec4(rgb * 1.25, refraction2));
                   `,
                 }
