@@ -4584,8 +4584,8 @@ const BasicShader = async (renderer, options=[]) => {
                     }else{
                       float ar = resolution.x/resolution.y;
                       float ref2x1 = ref2rx*ar;
-                      float ref2y1 = cos(0.0) * ref2ry;
-                      float ref2z1 = sin(0.0) * ref2ry;
+                      float ref2y1 = ref2ry;
+                      float ref2z1 = 0.0;
 
                       // roll
                       p = atan(ref2x1, ref2y1) - camOri.x;
@@ -4613,8 +4613,8 @@ const BasicShader = async (renderer, options=[]) => {
 
                       float ref2v = 0.83 / (900.0/fov);
                       float ref2x2 = 0.0;
-                      float ref2y2 = sin(0.0) *ref2v;
-                      float ref2z2 = cos(0.0) *ref2v;
+                      float ref2y2 = 0.0;
+                      float ref2z2 = ref2v;
                       
                       // roll
                       p = atan(ref2x2, ref2y2) - camOri.x;
@@ -4635,9 +4635,7 @@ const BasicShader = async (renderer, options=[]) => {
                       ref2z2 = cos(p) * d;
 
                       float ref2val = 1.0 -
-                         pow(.5 * (-1.66-nVec.z), 7.0) *
-                           50.0 * 
-                           angleOfRefraction2;
+                         pow(.5 * (-1.66-nVec.z), 7.0) * 50.0 * angleOfRefraction2;
                                
                       float ref2x3 = (ref2x1 / ref2val - ref2x2);
                       float ref2y3 = (ref2y1 / ref2val - ref2y2);
@@ -4661,10 +4659,11 @@ const BasicShader = async (renderer, options=[]) => {
                     
                     
                     vec2 ref2coords = vec2(ref2p1+.5/M_PI/2.0, ref2p2);
-                  
-                    addInColor = merge(addInColor, 
-                      vec4(texture2D(refraction2Map,
-                        ref2coords).rgb * 1.25, refraction2));
+                    vec3 rgb = texture2D(refraction2Map,ref2coords).rgb;
+                    rgb = vec3(rgb.r * (2.0 - nVec.x),
+                               rgb.g * (2.0 - nVec.z),
+                               rgb.b * (2.0 - nVec.y));
+                    addInColor = merge(addInColor, vec4(rgb * 1.25, refraction2);
                   `,
                 }
                 dataset.optionalUniforms.push( uniformOption )
@@ -6332,6 +6331,9 @@ const ProcessShapeArray = shape => {
       tz = data[shpIdx].oz
       var roll, pitch, yaw, rotationMode
       if(shape.shapeArrayIsSprite){
+        // to-do:
+        // subtract out shapeArray orientation for sprites.
+        // works currently, unless shape is reoriented.
         pitch = (-shape.renderer.pitch) * (shape.renderer.cameraMode == 'fps' ? 1 : -1) - shape.pitch
         yaw   = (-shape.renderer.yaw) - shape.yaw
         roll  = (shape.renderer.roll)  - shape.roll
