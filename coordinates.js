@@ -4663,7 +4663,7 @@ const BasicShader = async (renderer, options=[]) => {
                     rgb = vec3(rgb.r * (2.0 - nVec.x),
                                rgb.g * (2.0 - nVec.z),
                                rgb.b * (2.0 - nVec.y));
-                    addInColor = merge(addInColor, vec4(rgb * 1.25, refraction2);
+                    addInColor = merge(addInColor, vec4(rgb * 1.25, refraction2));
                   `,
                 }
                 dataset.optionalUniforms.push( uniformOption )
