@@ -4578,6 +4578,12 @@ const BasicShader = async (renderer, options=[]) => {
                     float ref2p1, ref2p2, d;
                     float ref2rx = rasterPos.x;
                     float ref2ry = rasterPos.y;
+
+                    float ref2val, ref2x3, ref2y3, ref2z3, ref2dist;
+                    float ref2p1Red, ref2p2Red;
+                    float ref2p1Green, ref2p2Green;
+                    float ref2p1Blue, ref2p2Blue;
+                      
                     if(refraction2OmitEquirectangular == 1.0){
                       ref2p1 = rasterPos.x/resolution.x;
                       ref2p2 = rasterPos.y/resolution.y;
@@ -4633,11 +4639,6 @@ const BasicShader = async (renderer, options=[]) => {
                       d = sqrt( ref2x2 * ref2x2 + ref2z2 * ref2z2 );
                       ref2x2 = sin(p) * d;
                       ref2z2 = cos(p) * d;
-                      
-                      float ref2val, ref2x3, ref2y3, ref2z3, ref2dist;
-                      float ref2p1Red, ref2p2Red;
-                      float ref2p1Green, ref2p2Green;
-                      float ref2p1Blue, ref2p2Blue;
                       
                       ref2val = 1.0 -
                          pow(.5 * (-1.66-nVec.z), 7.0) * 50.0 * angleOfRefraction2;
