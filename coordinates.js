@@ -4648,9 +4648,9 @@ const BasicShader = async (renderer, options=[]) => {
                       for(float k = 0.0; k < 5.0; k++){
                         
                         float nVecz = nVec.z + rangeZ / steps * k;
-                        float multRed = max(0.0, (sin(M_PI/steps*(k-1.0))-.5))*.3;
-                        float multGreen = max(0.0, (sin(M_PI/steps*(k-1.0)+1.0)-.5))*.3;
-                        float multBlue = max(0.0, (sin(M_PI/steps*(k-1.0)+M_PI/2.5+1.6)-.5));
+                        float multRed = 1.0+max(0.0, (sin(M_PI/steps*(k-1.0))-.5))*.3;
+                        float multGreen = 1.0+max(0.0, (sin(M_PI/steps*(k-1.0)+1.0)-.5))*.3;
+                        float multBlue = 1.0+max(0.0, (sin(M_PI/steps*(k-1.0)+M_PI/2.5+1.6)-.5));
                         
                         ref2val = 1.0 -
                            pow(.5 * (-1.66-nVecz), 7.0) * 50.0 * angleOfRefraction2;
