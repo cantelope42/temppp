@@ -4641,7 +4641,7 @@ const BasicShader = async (renderer, options=[]) => {
                       ref2z2 = cos(p) * d;
                       
                       float lowerZ = nVec.z/1.2
-                      float upperZ = nVec.z
+                      float upperZ = nVec.z;
                       float steps = 5.0;
                       
                       for(float k = 0.0; k < steps; k++){
