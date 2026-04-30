@@ -4580,9 +4580,9 @@ const BasicShader = async (renderer, options=[]) => {
                     float ref2ry = rasterPos.y;
 
                     float ref2val, ref2x3, ref2y3, ref2z3, ref2dist;
-                    float ref2p1Red, ref2p2Red;
-                    float ref2p1Green, ref2p2Green;
-                    float ref2p1Blue, ref2p2Blue;
+                    float ref2p1Red =0.0, ref2p2Red = 0.0;
+                    float ref2p1Green = 0.0, ref2p2Green = 0.0;
+                    float ref2p1Blue = 0.0, ref2p2Blue = 0.0;
                       
                     if(refraction2OmitEquirectangular == 1.0){
                       ref2p1 = rasterPos.x/resolution.x;
@@ -4640,44 +4640,55 @@ const BasicShader = async (renderer, options=[]) => {
                       ref2x2 = sin(p) * d;
                       ref2z2 = cos(p) * d;
                       
-                      ref2val = 1.0 -
-                         pow(.5 * (-1.66-nVec.z), 7.0) * 50.0 * angleOfRefraction2;
-                      ref2x3 = (ref2x1 / ref2val - ref2x2);
-                      ref2y3 = (ref2y1 / ref2val - ref2y2);
-                      ref2z3 = (ref2z1 / ref2val - ref2z2);
-                      ref2dist = sqrt(
-                        ref2x3 * ref2x3 +
-                        ref2y3 * ref2y3 +
-                        ref2z3 * ref2z3
-                      );
-                      ref2p1Red = -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0;
-                      ref2p2Red = acos(ref2y3 / ref2dist) / M_PI;
+                      float lowerZ = nVec.z/1.2
+                      float upperZ = nVec.z
+                      float steps = 5.0;
+                      
+                      for(float k = 0.0; k < steps; k++){
+                        
+                        float nVeczRed = nVec.z;
+                        float nVeczGreen = nVec.z;
+                        float nVeczBlue = nVec.z;
+                        
+                        ref2val = 1.0 -
+                           pow(.5 * (-1.66-nVeczRed), 7.0) * 50.0 * angleOfRefraction2;
+                        ref2x3 = (ref2x1 / ref2val - ref2x2);
+                        ref2y3 = (ref2y1 / ref2val - ref2y2);
+                        ref2z3 = (ref2z1 / ref2val - ref2z2);
+                        ref2dist = sqrt(
+                          ref2x3 * ref2x3 +
+                          ref2y3 * ref2y3 +
+                          ref2z3 * ref2z3
+                        );
+                        ref2p1Red += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps;
+                        ref2p2Red += acos(ref2y3 / ref2dist) / M_PI / steps;
 
-                      ref2val = 1.0 -
-                         pow(.5 * (-1.66-nVec.z/1.033), 7.0) * 50.0 * angleOfRefraction2;
-                      ref2x3 = (ref2x1 / ref2val - ref2x2);
-                      ref2y3 = (ref2y1 / ref2val - ref2y2);
-                      ref2z3 = (ref2z1 / ref2val - ref2z2);
-                      ref2dist = sqrt(
-                        ref2x3 * ref2x3 +
-                        ref2y3 * ref2y3 +
-                        ref2z3 * ref2z3
-                      );
-                      ref2p1Green = -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0;
-                      ref2p2Green = acos(ref2y3 / ref2dist) / M_PI;
+                        ref2val = 1.0 -
+                           pow(.5 * (-1.66-nVeczGreen/1.033), 7.0) * 50.0 * angleOfRefraction2;
+                        ref2x3 = (ref2x1 / ref2val - ref2x2);
+                        ref2y3 = (ref2y1 / ref2val - ref2y2);
+                        ref2z3 = (ref2z1 / ref2val - ref2z2);
+                        ref2dist = sqrt(
+                          ref2x3 * ref2x3 +
+                          ref2y3 * ref2y3 +
+                          ref2z3 * ref2z3
+                        );
+                        ref2p1Green += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps;
+                        ref2p2Green += acos(ref2y3 / ref2dist) / M_PI / steps;
 
-                      ref2val = 1.0 -
-                         pow(.5 * (-1.66-nVec.z/1.066), 7.0) * 50.0 * angleOfRefraction2;
-                      ref2x3 = (ref2x1 / ref2val - ref2x2);
-                      ref2y3 = (ref2y1 / ref2val - ref2y2);
-                      ref2z3 = (ref2z1 / ref2val - ref2z2);
-                      ref2dist = sqrt(
-                        ref2x3 * ref2x3 +
-                        ref2y3 * ref2y3 +
-                        ref2z3 * ref2z3
-                      );
-                      ref2p1Blue = -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0;
-                      ref2p2Blue = acos(ref2y3 / ref2dist) / M_PI;
+                        ref2val = 1.0 -
+                           pow(.5 * (-1.66-nVeczBlue/1.066), 7.0) * 50.0 * angleOfRefraction2;
+                        ref2x3 = (ref2x1 / ref2val - ref2x2);
+                        ref2y3 = (ref2y1 / ref2val - ref2y2);
+                        ref2z3 = (ref2z1 / ref2val - ref2z2);
+                        ref2dist = sqrt(
+                          ref2x3 * ref2x3 +
+                          ref2y3 * ref2y3 +
+                          ref2z3 * ref2z3
+                        );
+                        ref2p1Blue += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps;
+                        ref2p2Blue += acos(ref2y3 / ref2dist) / M_PI / steps;
+                      }
                     }
                     
                     
