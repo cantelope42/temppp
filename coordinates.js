@@ -4642,16 +4642,18 @@ const BasicShader = async (renderer, options=[]) => {
                       
                       float lowerZ = nVec.z/1.2;
                       float upperZ = nVec.z;
+                      float rangeZ = upperZ - lowerZ;
                       float steps = 5.0;
                       
                       for(float k = 0.0; k < 5.0; k++){
                         
-                        float nVeczRed = nVec.z;
-                        float nVeczGreen = nVec.z;
-                        float nVeczBlue = nVec.z;
+                        float nVecz = nVec.z + rangeZ / steps * k;
+                        float multRed = max(0.0, (sin(M_PI/steps*(k-1.0))-.5))*.3;
+                        float multGreen = max(0.0, (sin(M_PI/steps*(k-1.0)+1.0)-.5))*.3;
+                        float multBlue = max(0.0, (sin(M_PI/steps*(k-1.0)+M_PI/2.5+1.6)-.5));
                         
                         ref2val = 1.0 -
-                           pow(.5 * (-1.66-nVeczRed), 7.0) * 50.0 * angleOfRefraction2;
+                           pow(.5 * (-1.66-nVecz), 7.0) * 50.0 * angleOfRefraction2;
                         ref2x3 = (ref2x1 / ref2val - ref2x2);
                         ref2y3 = (ref2y1 / ref2val - ref2y2);
                         ref2z3 = (ref2z1 / ref2val - ref2z2);
@@ -4660,11 +4662,11 @@ const BasicShader = async (renderer, options=[]) => {
                           ref2y3 * ref2y3 +
                           ref2z3 * ref2z3
                         );
-                        ref2p1Red += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps;
-                        ref2p2Red += acos(ref2y3 / ref2dist) / M_PI / steps;
+                        ref2p1Red += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps * multRed;
+                        ref2p2Red += acos(ref2y3 / ref2dist) / M_PI / steps * multRed;
 
                         ref2val = 1.0 -
-                           pow(.5 * (-1.66-nVeczGreen/1.033), 7.0) * 50.0 * angleOfRefraction2;
+                           pow(.5 * (-1.66-nVecz/1.033), 7.0) * 50.0 * angleOfRefraction2;
                         ref2x3 = (ref2x1 / ref2val - ref2x2);
                         ref2y3 = (ref2y1 / ref2val - ref2y2);
                         ref2z3 = (ref2z1 / ref2val - ref2z2);
@@ -4673,11 +4675,11 @@ const BasicShader = async (renderer, options=[]) => {
                           ref2y3 * ref2y3 +
                           ref2z3 * ref2z3
                         );
-                        ref2p1Green += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps;
-                        ref2p2Green += acos(ref2y3 / ref2dist) / M_PI / steps;
+                        ref2p1Green += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps * multGreen;
+                        ref2p2Green += acos(ref2y3 / ref2dist) / M_PI / steps * multGreen;
 
                         ref2val = 1.0 -
-                           pow(.5 * (-1.66-nVeczBlue/1.066), 7.0) * 50.0 * angleOfRefraction2;
+                           pow(.5 * (-1.66-nVecz/1.066), 7.0) * 50.0 * angleOfRefraction2;
                         ref2x3 = (ref2x1 / ref2val - ref2x2);
                         ref2y3 = (ref2y1 / ref2val - ref2y2);
                         ref2z3 = (ref2z1 / ref2val - ref2z2);
@@ -4686,8 +4688,8 @@ const BasicShader = async (renderer, options=[]) => {
                           ref2y3 * ref2y3 +
                           ref2z3 * ref2z3
                         );
-                        ref2p1Blue += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps;
-                        ref2p2Blue += acos(ref2y3 / ref2dist) / M_PI / steps;
+                        ref2p1Blue += -(atan(ref2x3, ref2z3) + refraction2Theta) / M_PI / 2.0 / steps * multBlue;
+                        ref2p2Blue += acos(ref2y3 / ref2dist) / M_PI / steps * multBlue;
                       }
                     }
                     
