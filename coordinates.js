@@ -4644,7 +4644,7 @@ const BasicShader = async (renderer, options=[]) => {
                       float upperZ = nVec.z;
                       float steps = 5.0;
                       
-                      for(float k = 0.0; k < steps; k++){
+                      for(float k = 0.0; k < 5.0; k++){
                         
                         float nVeczRed = nVec.z;
                         float nVeczGreen = nVec.z;
