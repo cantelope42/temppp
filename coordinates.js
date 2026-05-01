@@ -4643,7 +4643,7 @@ const BasicShader = async (renderer, options=[]) => {
                       float lowerZ = nVec.z/2.0;
                       float upperZ = nVec.z;
                       float rangeZ = upperZ - lowerZ*(abs(angleOfRefraction2)*20.0);
-                      float steps = 5.0;
+                      float steps = 1.0;
                       
                       for(float k = 0.0; k < 5.0; k++){
                         
