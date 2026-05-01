@@ -4643,14 +4643,14 @@ const BasicShader = async (renderer, options=[]) => {
                       float lowerZ = nVec.z/2.0;
                       float upperZ = nVec.z;
                       float rangeZ = upperZ - lowerZ*(abs(angleOfRefraction2)*20.0);
-                      float steps = 1.0;
+                      float steps = 5.0;
                       
                       for(float k = 0.0; k < 5.0; k++){
                         
                         float nVecz = nVec.z + rangeZ / steps * k;
-                        float multRed = 1.0;//+max(0.0, (sin(M_PI/steps*(k-1.0))-.5))*.3;
-                        float multGreen = 1.0;//+max(0.0, (sin(M_PI/steps*(k-1.0)+1.0)-.5))*.3;
-                        float multBlue = 1.0;//+max(0.0, (sin(M_PI/steps*(k-1.0)+M_PI/2.5+1.6)-.5));
+                        float multRed = 1.0+max(0.0, (sin(M_PI/steps*(k-1.0))-.5))*.3;
+                        float multGreen = 1.0+max(0.0, (sin(M_PI/steps*(k-1.0)+1.0)-.5))*.3;
+                        float multBlue = 1.0+max(0.0, (sin(M_PI/steps*(k-1.0)+M_PI/2.5+1.6)-.5));
                         
                         ref2val = 1.0 -
                            pow(.5 * (-1.66-nVecz), 7.0) * 50.0 * angleOfRefraction2;
@@ -4666,7 +4666,7 @@ const BasicShader = async (renderer, options=[]) => {
                         ref2p2Red += acos(ref2y3 / ref2dist) / M_PI / steps * multRed;
 
                         ref2val = 1.0 -
-                           pow(.5 * (-1.66-nVecz/1.033), 7.0) * 50.0 * angleOfRefraction2;
+                           pow(.5 * (-1.66-nVecz), 7.0) * 50.0 * angleOfRefraction2;
                         ref2x3 = (ref2x1 / ref2val - ref2x2);
                         ref2y3 = (ref2y1 / ref2val - ref2y2);
                         ref2z3 = (ref2z1 / ref2val - ref2z2);
@@ -4679,7 +4679,7 @@ const BasicShader = async (renderer, options=[]) => {
                         ref2p2Green += acos(ref2y3 / ref2dist) / M_PI / steps * multGreen;
 
                         ref2val = 1.0 -
-                           pow(.5 * (-1.66-nVecz/1.066), 7.0) * 50.0 * angleOfRefraction2;
+                           pow(.5 * (-1.66-nVecz), 7.0) * 50.0 * angleOfRefraction2;
                         ref2x3 = (ref2x1 / ref2val - ref2x2);
                         ref2y3 = (ref2y1 / ref2val - ref2y2);
                         ref2z3 = (ref2z1 / ref2val - ref2z2);
