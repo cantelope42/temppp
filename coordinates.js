@@ -3896,7 +3896,7 @@ const GetShaderCoord = (vx, vy, vz, geometry, renderer,
 const ShowBounding = (shape, renderer, draw=true,
                       equirectangularPlugin=-1,
                       omitSplitCheck=true, splitCheckPass=0,
-                      lw = 10) => {
+                      lw = 10, offsetX=0, offsetY=0, offsetZ=0) => {
                         
   if(equirectangularPlugin == -1){
     equirectangularPlugin = renderer.equirectangularPlugin
@@ -3960,9 +3960,9 @@ const ShowBounding = (shape, renderer, draw=true,
       //Overlay.ctx.beginPath()
       b = []
     }
-    X = shape.vertices[i+0]
-    Y = shape.vertices[i+1]
-    Z = shape.vertices[i+2]
+    X = shape.vertices[i+0] + offsetX
+    Y = shape.vertices[i+1] + offsetY
+    Z = shape.vertices[i+2] + offsetZ
     nx = i+0 < shape.normalVecs.length ? shape.normalVecs[i+0] : 0
     ny = i+1 < shape.normalVecs.length ? shape.normalVecs[i+1] : 0
     nz = i+2 < shape.normalVecs.length ? shape.normalVecs[i+2] : 0
