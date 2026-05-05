@@ -3960,9 +3960,9 @@ const ShowBounding = (shape, renderer, draw=true,
       //Overlay.ctx.beginPath()
       b = []
     }
-    X = shape.vertices[i+0] - renderer.offsetX
-    Y = shape.vertices[i+1] - renderer.offsetY
-    Z = shape.vertices[i+2] - renderer.offsetZ
+    X = shape.vertices[i+0] + renderer.offsetX
+    Y = shape.vertices[i+1] + renderer.offsetY
+    Z = shape.vertices[i+2] + renderer.offsetZ
     nx = i+0 < shape.normalVecs.length ? shape.normalVecs[i+0] : 0
     ny = i+1 < shape.normalVecs.length ? shape.normalVecs[i+1] : 0
     nz = i+2 < shape.normalVecs.length ? shape.normalVecs[i+2] : 0
