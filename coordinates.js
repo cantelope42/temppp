@@ -3807,9 +3807,9 @@ const GetShaderCoord = (vx, vy, vz, geometry, renderer,
     vz = ar[2]
   }
 
-  var cpx = renderer.x - renderer.offsetX
-  var cpy = renderer.y - renderer.offsetY
-  var cpz = renderer.z - renderer.offsetZ
+  var cpx = renderer.offsetX + renderer.x
+  var cpy = renderer.offsetY + renderer.y
+  var cpz = renderer.offsetZ + renderer.z
 
   vx += -geometry.x
   vy += geometry.y
