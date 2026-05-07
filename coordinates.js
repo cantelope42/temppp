@@ -2207,10 +2207,10 @@ const LoadGeometry = async (renderer, geoOptions) => {
     if(subs < 5 && hint){
       var fileBase
       if(1)switch(hint){
-        case 'cylinder_0':
-        case 'cylinder_1':
-        case 'cylinder_2':
-        case 'cylinder_3':
+        //case 'cylinder_0':
+        //case 'cylinder_1':
+        //case 'cylinder_2':
+        //case 'cylinder_3':
         case 'torus_0':
         case 'torus knot_0':
         case 'tetrahedron_0':
@@ -2479,6 +2479,12 @@ const LoadGeometry = async (renderer, geoOptions) => {
         })
       break
       case 'cylinder':
+        shape = await LoadOBJ(`${ModuleBase}/prebuilt%20shapes/cylinder.obj`,
+                        size, 0,0,0,0,0,0, false, true)
+        vertices = shape.vertices
+        normals  = shape.normals
+        uvs      = shape.uvs
+        /*
         shape = await Cylinder(size, subs, rows, cols, sphereize,
                       flipNormals, shapeType)
         shape.geometry.map(v => {
@@ -2486,6 +2492,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
           normals.push(...v.normal)
           uvs.push(...v.texCoord)
         })
+        */
       break
       case 'dynamic':
         shape = await GeometryFromRaw(geometryData, texCoords,
@@ -3800,9 +3807,9 @@ const GetShaderCoord = (vx, vy, vz, geometry, renderer,
     vz = ar[2]
   }
 
-  var cpx = renderer.x
-  var cpy = renderer.y
-  var cpz = renderer.z
+  var cpx = renderer.x - renderer.offsetX
+  var cpy = renderer.y - renderer.offsetY
+  var cpz = renderer.z - renderer.offsetZ
 
   vx += -geometry.x
   vy += geometry.y
@@ -3960,9 +3967,9 @@ const ShowBounding = (shape, renderer, draw=true,
       //Overlay.ctx.beginPath()
       b = []
     }
-    X = shape.vertices[i+0] + renderer.offsetX
-    Y = shape.vertices[i+1] + renderer.offsetY
-    Z = shape.vertices[i+2] + renderer.offsetZ
+    X = shape.vertices[i+0]
+    Y = shape.vertices[i+1]
+    Z = shape.vertices[i+2]
     nx = i+0 < shape.normalVecs.length ? shape.normalVecs[i+0] : 0
     ny = i+1 < shape.normalVecs.length ? shape.normalVecs[i+1] : 0
     nz = i+2 < shape.normalVecs.length ? shape.normalVecs[i+2] : 0
@@ -6357,7 +6364,7 @@ const BasicShader = async (renderer, options=[]) => {
           dset.locRenderNormals  = gl.getUniformLocation(dset.program, "renderNormals")
           gl.uniform3f(dset.locCamPos,        renderer.x, renderer.y, renderer.z)
           gl.uniform3f(dset.locCamOri,        renderer.roll, renderer.pitch, renderer.yaw)
-          gl.uniform3f(dset.locGeoPos,        renderer.x, renderer.y, renderer.z)
+          gl.uniform3f(dset.locGeoPos,        geometry.x, geometry.y, geometry.z)
           gl.uniform3f(dset.locGeoOri,        geometry.roll, geometry.pitch, geometry.yaw)
           gl.uniform1f(dset.locFov,           renderer.fov)
           gl.uniform1f(dset.locRenderNormals, 0)
