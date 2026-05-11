@@ -6753,7 +6753,7 @@ const ShapeFromArray = async (shape, pointArray, options={}) => {
     'heightmapDataArrayWidth', 'heightmapDataArrayHeight',
     'rebindTextures', 'exportAsOBJ', 'downloadAsOBJ',
     'resolved','map', 'video', 'muted', 'partitionSize',
-    'partitionRadius'
+    'partitionRadius', 'scaleX', 'scaleY', 'scaleZ'
   ]).forEach(key => { opts[key] = shape[key] })
   opts.name = shape.name
   Object.keys(options).forEach((key, idx) => {
