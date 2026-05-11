@@ -6703,9 +6703,9 @@ const ShapeFromArray = async (shape, pointArray, options={}) => {
   var stride    = shape.vertices.length
   var shapeData = []
   pointArray.map((par, i) => {
-    var tx = par[0]
-    var ty = par[1]
-    var tz = par[2]
+    var tx = par[0] * shape.scaleX
+    var ty = par[1] * shape.scaleY
+    var tz = par[2] * shape.scaleZ
     for(var j = 0; j < v.length; j+=3){
       geometryData.vertices.push(tx+v[j+0], ty+v[j+1], tz+v[j+2])
       if(n)    geometryData.normals.push(tx+n[j*2+0], ty+n[j*2+1], tz+n[j*2+2])
