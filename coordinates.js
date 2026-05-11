@@ -6999,58 +6999,59 @@ const ApplyRotation = shape => {
     z = shape.vertices[i+2]
     switch(shape.rotationMode){
       case 0:
-        p = Math.atan2(x, y)
+        p = Math.atan2(x, y) + shape.roll
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
-        p = Math.atan2(x, z)
+        p = Math.atan2(x, z) + shape.yaw
         d = Math.hypot(x, z)
         x = S(p) * d
         z = C(p) * d
-        p = Math.atan2(y, z)
+        p = Math.atan2(y, z) + shape.pitch
         d = Math.hypot(y, z)
         y = S(p) * d
         z = C(p) * d
       case 1:
-        p = Math.atan2(y, z)
+        p = Math.atan2(y, z) + shape.pitch
         d = Math.hypot(y, z)
         y = S(p) * d
         z = C(p) * d
-        p = Math.atan2(x, z)
+        p = Math.atan2(x, z) + shape.yaw
         d = Math.hypot(x, z)
         x = S(p) * d
         z = C(p) * d
-        p = Math.atan2(x, y)
+        p = Math.atan2(x, y) + shape.roll
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
       case 2:
-        p = Math.atan2(x, z)
+        p = Math.atan2(x, z) + shape.yaw
         d = Math.hypot(x, z)
         x = S(p) * d
         z = C(p) * d
-        p = Math.atan2(y, z)
+        p = Math.atan2(y, z) + shape.pitch
         d = Math.hypot(y, z)
         y = S(p) * d
         z = C(p) * d
-        p = Math.atan2(x, y)
+        p = Math.atan2(x, y) + shape.roll
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
       case 3:
-        p = Math.atan2(x, z)
+        p = Math.atan2(x, z) + shape.yaw
         d = Math.hypot(x, z)
         x = S(p) * d
         z = C(p) * d
-        p = Math.atan2(y, z)
+        p = Math.atan2(y, z) + shape.pitch
         d = Math.hypot(y, z)
         y = S(p) * d
         z = C(p) * d
-        p = Math.atan2(x, y)
+        p = Math.atan2(x, y) + shape.roll
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
     }
+    shape.yaw = shape.pitch = shape.roll = 0
     shape.vertices[i+0] = x
     shape.vertices[i+1] = y
     shape.vertices[i+2] = z
