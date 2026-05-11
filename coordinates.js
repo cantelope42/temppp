@@ -6989,10 +6989,7 @@ const ApplyLocation = shape => {
 }
 
 const ApplyRotation = shape => {
-  var ax = 0, ay = 0, az = 0, ct = 0, x, y, z, p, d
-  var cx = shape.x
-  var cy = shape.y
-  var cz = shape.z
+  var x, y, z, p, d
   for(var i = 0; i < shape.vertices.length; i+=3){
     x = shape.vertices[i+0]
     y = shape.vertices[i+1]
@@ -7051,11 +7048,11 @@ const ApplyRotation = shape => {
         x = S(p) * d
         y = C(p) * d
     }
-    shape.yaw = shape.pitch = shape.roll = 0
     shape.vertices[i+0] = x
     shape.vertices[i+1] = y
     shape.vertices[i+2] = z
   }
+  shape.yaw = shape.pitch = shape.roll = 0
 }
 
 const ApplyScale = shape => {
