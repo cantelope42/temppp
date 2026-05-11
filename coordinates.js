@@ -6694,18 +6694,35 @@ const ProcessShapeArray = shape => {
 const ShapeFromArray = async (shape, pointArray, options={}) => {
   
   var geometryData = { vertices: [], normals: [], normalVecs: [], uvs: [], flatShadingNormalVecs: [] }
+  
+  var vertices = structuredClone(shape.vertices)
+  var normals = structuredClone(shape.normals)
+  if(shape.scaleX != 1 || shape.scaleY != 1 || shape.scaleZ != 1){
+    for(var i = 0; i < shape.vertices.length; i += 3){
+      vertices[i+0] *= shape.scaleX
+      vertices[i+1] *= shape.scaleY
+      vertices[i+2] *= shape.scaleZ
+      normals[i*2+0] *= shape.scaleX
+      normals[i*2+1] *= shape.scaleY
+      normals[i*2+2] *= shape.scaleZ
+      normals[i*2+3] *= shape.scaleX
+      normals[i*2+4] *= shape.scaleY
+      normals[i*2+5] *= shape.scaleZ
+    }
+  }
+  
   var stride    = shape.vertices.length
-  var v         = shape.vertices
-  var n         = shape.normals
+  var v         = vertices
+  var n         = normals
   var uv        = shape.uvs
   var nv        = shape.normalVecs
   var fsnv      = shape.flatShadingNormalVecs
   var stride    = shape.vertices.length
   var shapeData = []
   pointArray.map((par, i) => {
-    var tx = par[0] / shape.scaleX
-    var ty = par[1] / shape.scaleY
-    var tz = par[2] / shape.scaleZ
+    var tx = par[0]
+    var ty = par[1]
+    var tz = par[2]
     for(var j = 0; j < v.length; j+=3){
       geometryData.vertices.push(tx+v[j+0], ty+v[j+1], tz+v[j+2])
       if(n)    geometryData.normals.push(tx+n[j*2+0], ty+n[j*2+1], tz+n[j*2+2])
@@ -6793,6 +6810,7 @@ const ShapeFromArray = async (shape, pointArray, options={}) => {
     if(opts.shapeArrayIsSprite) geometry.shapeArrayIsSprite = true
     ret = geometry
     ret.shapeData = shapeData
+    ret.scaleX = ret.scaleY = ret.scaleZ = 1
   })
   
   return ret
