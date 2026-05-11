@@ -6990,71 +6990,78 @@ const ApplyLocation = shape => {
 
 const ApplyRotation = shape => {
   var x, y, z, p, d
-  for(var i = 0; i < shape.vertices.length; i+=3){
-    x = shape.vertices[i+0]
-    y = shape.vertices[i+1]
-    z = shape.vertices[i+2]
-    switch(shape.rotationMode){
-      case 0:
-        p = Math.atan2(x, y) + shape.roll
-        d = Math.hypot(x, y)
-        x = S(p) * d
-        y = C(p) * d
-        p = Math.atan2(x, z) + shape.yaw
-        d = Math.hypot(x, z)
-        x = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(y, z) + shape.pitch
-        d = Math.hypot(y, z)
-        y = S(p) * d
-        z = C(p) * d
-      break
-      case 1:
-        p = Math.atan2(y, z) + shape.pitch
-        d = Math.hypot(y, z)
-        y = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(x, z) + shape.yaw
-        d = Math.hypot(x, z)
-        x = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(x, y) + shape.roll
-        d = Math.hypot(x, y)
-        x = S(p) * d
-        y = C(p) * d
-      break
-      case 2:
-        p = Math.atan2(x, z) + shape.yaw
-        d = Math.hypot(x, z)
-        x = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(y, z) + shape.pitch
-        d = Math.hypot(y, z)
-        y = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(x, y) + shape.roll
-        d = Math.hypot(x, y)
-        x = S(p) * d
-        y = C(p) * d
-      break
-      case 3:
-        p = Math.atan2(x, z) + shape.yaw
-        d = Math.hypot(x, z)
-        x = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(y, z) + shape.pitch
-        d = Math.hypot(y, z)
-        y = S(p) * d
-        z = C(p) * d
-        p = Math.atan2(x, y) + shape.roll
-        d = Math.hypot(x, y)
-        x = S(p) * d
-        y = C(p) * d
-      break
+  for(var m = 3; m--;){
+    switch(m){
+      case 0: component = 'vertices'; break
+      case 1: component = 'normalVecs'; break
+      case 3: component = 'normals'; break
     }
-    shape.vertices[i+0] = x
-    shape.vertices[i+1] = y
-    shape.vertices[i+2] = z
+    for(var i = 0; i < shape[component].length; i+=3){
+      x = shape[component][i+0]
+      y = shape[component][i+1]
+      z = shape[component][i+2]
+      switch(shape.rotationMode){
+        case 0:
+          p = Math.atan2(x, y) + shape.roll
+          d = Math.hypot(x, y)
+          x = S(p) * d
+          y = C(p) * d
+          p = Math.atan2(x, z) + shape.yaw
+          d = Math.hypot(x, z)
+          x = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(y, z) + shape.pitch
+          d = Math.hypot(y, z)
+          y = S(p) * d
+          z = C(p) * d
+        break
+        case 1:
+          p = Math.atan2(y, z) + shape.pitch
+          d = Math.hypot(y, z)
+          y = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(x, z) + shape.yaw
+          d = Math.hypot(x, z)
+          x = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(x, y) + shape.roll
+          d = Math.hypot(x, y)
+          x = S(p) * d
+          y = C(p) * d
+        break
+        case 2:
+          p = Math.atan2(x, z) + shape.yaw
+          d = Math.hypot(x, z)
+          x = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(y, z) + shape.pitch
+          d = Math.hypot(y, z)
+          y = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(x, y) + shape.roll
+          d = Math.hypot(x, y)
+          x = S(p) * d
+          y = C(p) * d
+        break
+        case 3:
+          p = Math.atan2(x, z) + shape.yaw
+          d = Math.hypot(x, z)
+          x = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(y, z) + shape.pitch
+          d = Math.hypot(y, z)
+          y = S(p) * d
+          z = C(p) * d
+          p = Math.atan2(x, y) + shape.roll
+          d = Math.hypot(x, y)
+          x = S(p) * d
+          y = C(p) * d
+        break
+      }
+      shape[component][i+0] = x
+      shape[component][i+1] = y
+      shape[component][i+2] = z
+    }
   }
   shape.yaw = shape.pitch = shape.roll = 0
 }
