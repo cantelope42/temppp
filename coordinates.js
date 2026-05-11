@@ -6994,7 +6994,7 @@ const ApplyRotation = shape => {
     switch(m){
       case 0: component = 'vertices'; break
       case 1: component = 'normalVecs'; break
-      case 3: component = 'normals'; break
+      case 2: component = 'normals'; break
     }
     for(var i = 0; i < shape[component].length; i+=3){
       x = shape[component][i+0]
