@@ -6989,7 +6989,7 @@ const ApplyLocation = shape => {
 }
 
 const ApplyRotation = shape => {
-  var x, y, z, p, d
+  var x, y, z, p, d, component
   for(var m = 3; m--;){
     switch(m){
       case 0: component = 'vertices'; break
