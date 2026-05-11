@@ -7008,6 +7008,7 @@ const ApplyRotation = shape => {
         d = Math.hypot(y, z)
         y = S(p) * d
         z = C(p) * d
+      break
       case 1:
         p = Math.atan2(y, z) + shape.pitch
         d = Math.hypot(y, z)
@@ -7021,6 +7022,7 @@ const ApplyRotation = shape => {
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
+      break
       case 2:
         p = Math.atan2(x, z) + shape.yaw
         d = Math.hypot(x, z)
@@ -7034,6 +7036,7 @@ const ApplyRotation = shape => {
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
+      break
       case 3:
         p = Math.atan2(x, z) + shape.yaw
         d = Math.hypot(x, z)
@@ -7047,6 +7050,7 @@ const ApplyRotation = shape => {
         d = Math.hypot(x, y)
         x = S(p) * d
         y = C(p) * d
+      break
     }
     shape.vertices[i+0] = x
     shape.vertices[i+1] = y
