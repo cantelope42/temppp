@@ -3286,7 +3286,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
     nstate, vstate, nvstate, shapeData, stride,
     oUvs, oScaleUVX, oScaleUVY, isPartitioned,
     partitionSize, partitionRadius, oCamX, oCamY, oCamZ,
-    oCamRoll, oCamPitch, oCamYaw,
+    oCamRoll, oCamPitch, oCamYaw, scaleX, scaleY, scaleZ,
   }
   
   
