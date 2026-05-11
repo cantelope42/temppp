@@ -5175,9 +5175,9 @@ const BasicShader = async (renderer, options=[]) => {
         float cx, cy, cz;
         
         if(renderNormals == 1.0){
-          cx = normal.x;
-          cy = normal.y;
-          cz = normal.z;
+          cx = normal.x * scaleX;
+          cy = normal.y * scaleY;
+          cz = normal.z * scaleZ;
         }else{
           cx = position.x * scaleX + offset.x;
           cy = position.y * scaleY + offset.y;
