@@ -9261,7 +9261,7 @@ const LoadFPSControls = async (renderer, options) => {
   }
 }
 
-const RecomputeNormalsOutside = shape => {
+const RecomputeNormalsOutside = (shape, flip = false) => {
   if(shape.averageNormals) {
     AverageNormals(shape.verts, shape.normals,
       shape.shapeType, shape.normalVecs,
@@ -9277,6 +9277,7 @@ const RecomputeNormalsOutside = shape => {
     ax /= ct
     ay /= ct
     az /= ct
+    var f = flip ? -1 : 1
     for(var i = 0; i < shape.normalVecs.length; i += 9){
       var x1 = shape.normalVecs[i+0]
       var y1 = shape.normalVecs[i+1]
@@ -9294,15 +9295,15 @@ const RecomputeNormalsOutside = shape => {
       var nx = n[3] - n[0]
       var ny = n[4] - n[1]
       var nz = n[5] - n[2]
-      shape.normalVecs[i+0] = nx
-      shape.normalVecs[i+1] = ny
-      shape.normalVecs[i+2] = nz
-      shape.normalVecs[i+3] = nx
-      shape.normalVecs[i+4] = ny
-      shape.normalVecs[i+5] = nz
-      shape.normalVecs[i+6] = nx
-      shape.normalVecs[i+7] = ny
-      shape.normalVecs[i+8] = nz
+      shape.normalVecs[i+0] = nx * f
+      shape.normalVecs[i+1] = ny * f
+      shape.normalVecs[i+2] = nz * f
+      shape.normalVecs[i+3] = nx * f
+      shape.normalVecs[i+4] = ny * f
+      shape.normalVecs[i+5] = nz * f
+      shape.normalVecs[i+6] = nx * f
+      shape.normalVecs[i+7] = ny * f
+      shape.normalVecs[i+8] = nz * f
     }
   }
 }
