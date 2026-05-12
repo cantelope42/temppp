@@ -2485,7 +2485,7 @@ const LoadGeometry = async (renderer, geoOptions) => {
         })
       break
       case 'cylinder':
-        flipNormals = !flipNormals
+        flipNormals = true
         shape = await LoadOBJ(`${ModuleBase}/prebuilt%20shapes/cylinder.obj`,
                         size, 0,0,0,0,0,0, false, true)
         vertices = shape.vertices
