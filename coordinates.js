@@ -2485,7 +2485,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
         })
       break
       case 'cylinder':
-        flipNormals = true
         shape = await LoadOBJ(`${ModuleBase}/prebuilt%20shapes/cylinder.obj`,
                         size, 0,0,0,0,0,0, false, true)
         vertices = shape.vertices
@@ -2881,7 +2880,6 @@ const LoadGeometry = async (renderer, geoOptions) => {
       }
     }
   }
-  
   
   if(flipX){
     for(var i=0; i< vertices.length; i+=3){
@@ -9263,6 +9261,52 @@ const LoadFPSControls = async (renderer, options) => {
   }
 }
 
+const RecomputeNormalsOutside = shape => {
+  if(shape.averageNormals) {
+    AverageNormals(shape.verts, shape.normals,
+      shape.shapeType, shape.normalVecs,
+      false, flatShadingNormalVecs)
+  }else{
+    var ax=0, ay=0, az=0, ct=0
+    for(var i = 0; i < shape.vertices.length; i+=3){
+      ax += shape.vertices[i+0]
+      ay += shape.vertices[i+1]
+      az += shape.vertices[i+2]
+      ct++
+    }
+    ax /= ct
+    ay /= ct
+    az /= ct
+    for(var i = 0; i < shape.normalVecs.length; i += 9){
+      var x1 = shape.normalVecs[i+0]
+      var y1 = shape.normalVecs[i+1]
+      var z1 = shape.normalVecs[i+2]
+      var x2 = shape.normalVecs[i+3]
+      var y2 = shape.normalVecs[i+4]
+      var z2 = shape.normalVecs[i+5]
+      var x3 = shape.normalVecs[i+6]
+      var y3 = shape.normalVecs[i+7]
+      var z3 = shape.normalVecs[i+8]
+      var n = Normal([[x1,y1,z1],
+                      [x2,y2,z2],
+                      [x3,y3,z3]], autoFlipNormals=true,
+                      ax, ay, az)
+      var nx = n[3] - n[0]
+      var ny = n[4] - n[1]
+      var nz = n[5] - n[2]
+      shape.normalVecs[i+0] = nx
+      shape.normalVecs[i+1] = ny
+      shape.normalVecs[i+2] = nz
+      shape.normalVecs[i+3] = nx
+      shape.normalVecs[i+4] = ny
+      shape.normalVecs[i+5] = nz
+      shape.normalVecs[i+6] = nx
+      shape.normalVecs[i+7] = ny
+      shape.normalVecs[i+8] = nz
+    }
+  }
+}
+
 const ShouldDisableDepth = shape => {
   //return false
   return ((!shape.isParticle) && (!shape.isLine) &&
@@ -9844,6 +9888,7 @@ export {
   RGBFromHSV,
   HexFromRGB,
   RGBToHex,
+  RecomputeNormalsOutside,
   RGBFromHex,
   HexToRGB,
   GeoSphere,
