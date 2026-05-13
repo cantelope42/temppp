@@ -9265,7 +9265,7 @@ const RecomputeNormalsOutside = (shape, flip = false) => {
   if(shape.averageNormals) {
     AverageNormals(shape.verts, shape.normals,
       shape.shapeType, shape.normalVecs,
-      false, flatShadingNormalVecs)
+      false, shape.flatShadingNormalVecs)
   }else{
     var ax=0, ay=0, az=0, ct=0
     for(var i = 0; i < shape.vertices.length; i+=3){
