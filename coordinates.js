@@ -9290,7 +9290,7 @@ const RecomputeNormalsOutside = (shape, flip = false) => {
       var z3 = shape.normalVecs[i+8]
       var n = Normal([[x1,y1,z1],
                       [x2,y2,z2],
-                      [x3,y3,z3]], autoFlipNormals=true,
+                      [x3,y3,z3]], true,
                       ax, ay, az)
       var nx = n[3] - n[0]
       var ny = n[4] - n[1]
