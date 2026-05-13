@@ -9263,7 +9263,7 @@ const LoadFPSControls = async (renderer, options) => {
 
 const RecomputeNormalsOutside = (shape, flip = false) => {
   if(shape.averageNormals) {
-    AverageNormals(shape.verts, shape.normals,
+    AverageNormals(shape.vertices, shape.normals,
       shape.shapeType, shape.normalVecs,
       false, shape.flatShadingNormalVecs)
   }else{
