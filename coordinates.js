@@ -1584,7 +1584,7 @@ const LoadAnimationFromZip = (renderer, options, shader) => {
 }
 
 const DrawAnimation = (renderer, animation, options) => {
-  var t = renderer.t
+  var t = renderer.frameCount
   var x = 0, y = 0, z = 0
   var roll = 0, pitch = 0, yaw = 0
   var speed    = 1
@@ -1609,7 +1609,7 @@ const DrawAnimation = (renderer, animation, options) => {
   if(typeof animation != 'undefined' && animation.loaded &&
      animation.geometries.length){
     for(var m=1;m--;){
-      if(animationSpeed && !(((t*60)|0)%animationSpeed))
+      if(animationSpeed && !(t%animationSpeed))
       animation.curFrame += animation.dir
       if(animation.curFrame >= animation.geometries.length-(loopMode=='cycle'?0:1)){
         switch(loopMode){
