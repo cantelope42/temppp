@@ -1608,35 +1608,33 @@ const DrawAnimation = (renderer, animation, options) => {
 
   if(typeof animation != 'undefined' && animation.loaded &&
      animation.geometries.length){
-    for(var m=1;m--;){
-      if(animationSpeed && !(t%animationSpeed))
-      animation.curFrame += animation.dir
-      if(animation.curFrame >= animation.geometries.length-(loopMode=='cycle'?1:1)){
-        switch(loopMode){
-          case 'cycle':
-            animation.curFrame = 0
-          break
-          case 'reverse':
-            animation.dir = -1
-          break
-          default:
-            animation.dir = -1
-          break
-        }
+    if(animationSpeed && !(t%animationSpeed))
+    animation.curFrame += animation.dir
+  console.log(animation.curFrame, animation.dir, animation.loopMode, animation.animationSpeed)
+    if(animation.curFrame >= animation.geometries.length-(loopMode=='cycle'?1:1)){
+      switch(loopMode){
+        case 'cycle':
+          animation.curFrame = 0
+        break
+        case 'reverse':
+          animation.dir = -1
+        break
+        default:
+          animation.dir = -1
+        break
       }
-      if(animation.curFrame < (loopMode=='cycle'?1:1)){
-        switch(loopMode){
-          case 'cycle':
-            animation.curFrame = animation.geometries.length - 1
-            animation.dir = 1
-          break
-          case 'reverse':
-            animation.dir = 1
-          break
-          default:
-            animation.dir = 1
-          break
-        }
+    }
+    if(animation.curFrame < (loopMode=='cycle'?1:1)){
+      switch(loopMode){
+        case 'cycle':
+          animation.curFrame = animation.geometries.length - 1
+        break
+        case 'reverse':
+          animation.dir = 1
+        break
+        default:
+          animation.dir = 1
+        break
       }
     }
     var shape = animation.geometries[animation.curFrame]
