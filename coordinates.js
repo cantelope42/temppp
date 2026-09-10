@@ -1610,12 +1610,10 @@ const DrawAnimation = (renderer, animation, options) => {
      animation.geometries.length){
     if(animationSpeed && !(t%animationSpeed))
     animation.curFrame += animation.dir
-  //console.log(animation.curFrame, animation.geometries.length-(loopMode=='cycle'?0:1))
     if(animation.curFrame >= animation.geometries.length-(loopMode=='cycle'?0:1)){
       switch(loopMode){
         case 'cycle':
           animation.curFrame = 0
-          console.log('animation.curFrame', animation.curFrame)
         break
         case 'reverse':
           animation.dir = -1
@@ -1625,11 +1623,8 @@ const DrawAnimation = (renderer, animation, options) => {
         break
       }
     }
-    if(animation.curFrame < (loopMode=='cycle'?1:1)){
+    if(animation.curFrame < 1){
       switch(loopMode){
-        case 'cycle':
-          animation.curFrame = animation.geometries.length - 1
-        break
         case 'reverse':
           animation.dir = 1
         break
