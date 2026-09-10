@@ -1611,7 +1611,7 @@ const DrawAnimation = (renderer, animation, options) => {
     for(var m=1;m--;){
       if(animationSpeed && !(t%animationSpeed))
       animation.curFrame += animation.dir
-      if(animation.curFrame >= animation.geometries.length-(loopMode=='cycle'?0:1)){
+      if(animation.curFrame >= animation.geometries.length-(loopMode=='cycle'?1:1)){
         switch(loopMode){
           case 'cycle':
             animation.curFrame = 0
